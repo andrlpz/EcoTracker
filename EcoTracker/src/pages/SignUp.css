@@ -1,0 +1,155 @@
+.fondo{
+    --background: #F0F0E9;
+}
+
+.log{
+    height: 78px;
+    width: 80px;
+    top: 30px;
+    left: 180px;
+    position:absolute;
+}
+
+.rectangulo{
+    width: 286px;
+    height: 64px;
+    border-radius: 60px;
+    position: absolute;
+    background: #C2CDC1;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    top:140px;
+    left: 70px;
+}
+
+.text1{
+    color: #5A7964;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+.name{
+    position: absolute;
+    top:230px;
+    left: 40px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#InputNom{
+    border-radius: 5px;
+    width: 355px;
+    height: 40px;
+    position: absolute;
+    background-color: #DADAC7;
+    left: 35px;
+    top: 290px; 
+}
+
+.mail{
+    position: absolute;
+    top:340px;
+    left: 40px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#InputMail{
+    border-radius: 5px;
+    width: 355px;
+    height: 40px;
+    position: absolute;
+    background-color: #DADAC7;
+    left: 35px;
+    top: 400px; 
+}
+
+.pswd2{
+    position: absolute;
+    top:450px;
+    left: 40px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#InputPswd2{
+    border-radius: 5px;
+    width: 355px;
+    height: 40px;
+    position: absolute;
+    background-color: #DADAC7;
+    left: 35px;
+    top: 510px;
+}
+
+.SignUp{
+    position: absolute;
+    top:650px;
+    left:90px;
+    width: 229px;
+    height: 48px;
+    border-radius: 10px;
+    color: #DADAC7;
+    font-weight: bold;
+    font-size: 19px;
+    font-family: 'Montserrat', sans-serif;
+    --background: #003F5C;
+    --background-activated: #054c6d;
+}
+
+.permission{
+    position: absolute;
+    top:580px;
+    left: 40px;
+    --track-background-checked: #6b9577;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 17px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.txsign{
+    position: absolute;
+    top:730px;
+    left:155px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.google2{
+    position:absolute;
+    top:770px;
+    left:165px;
+    --background: transparent;
+    --background-activated: #f0fff56b;
+}
+
+.text2{
+    position: absolute;
+    top:850px;
+    left:50px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 17px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.textLog{
+    position: absolute;
+    top:866px;
+    left:300px;
+    color: #003F5C;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+}
