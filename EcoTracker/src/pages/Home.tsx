@@ -1,22 +1,24 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import { IonContent, IonFooter, IonHeader, IonPage } from '@ionic/react';
 import './Home.css';
+import { playCircle, radio, library, search } from 'ionicons/icons';
 
 const Home: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
+      <IonContent fullscreen className='fondo'>
+        <IonHeader>
+          <div className='logo-header-home'>
+            <img src="../../assets/Logo 2.png"></img>
+          </div>
+          <div className='logo-name-home'>
+            <img src="../../assets/EcoTracker.png"></img>
+          </div>
+          <div className='div-header'>
+          </div>
         </IonHeader>
-        <ExploreContainer />
+        <IonFooter>
+          <div className='div-footer'></div>
+        </IonFooter>
       </IonContent>
     </IonPage>
   );
