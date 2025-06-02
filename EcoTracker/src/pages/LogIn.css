@@ -1,0 +1,166 @@
+.bck{
+    --background: #F0F0E9;
+}
+
+.log{
+    height: 78px;
+    width: 80px;
+    top: 30px;
+    left: 180px;
+    position:absolute;
+}
+
+.rectangulo{
+    width: 286px;
+    height: 64px;
+    border-radius: 60px;
+    position: absolute;
+    background: #C2CDC1;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    top:140px;
+    left: 70px;
+}
+
+.welcome{
+    color: #5A7964;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+.name{
+    position: absolute;
+    top:240px;
+    left: 40px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#InputNom{
+    border-radius: 5px;
+    width: 355px;
+    height: 40px;
+    position: absolute;
+    background-color: #DADAC7;
+    left: 35px;
+    top: 300px; 
+}
+
+.pswd{
+    position: absolute;
+    top:365px;
+    left: 40px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+#InputPswd{
+    border-radius: 5px;
+    width: 355px;
+    height: 40px;
+    position: absolute;
+    background-color: #DADAC7;
+    left: 35px;
+    top: 425px;
+}
+
+.remember{
+    position: absolute;
+    top:520px;
+    left: 30px;
+    --size: 25px;
+    --checkbox-background-checked: #6b9577;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 17px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.remember::part(container) {
+    border-radius: 6px;
+    border: 2px solid #008211;
+  }
+
+.forgotPswd{
+    position: absolute;
+    top:525px;
+    left:240px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.logIn{
+    position: absolute;
+    top:600px;
+    left:90px;
+    width: 229px;
+    height: 48px;
+    border-radius: 10px;
+    color: #DADAC7;
+    font-weight: bold;
+    font-size: 19px;
+    font-family: 'Montserrat', sans-serif;
+    --background: #003F5C;
+    --background-activated: #054c6d;
+}
+
+.txlog{
+    position: absolute;
+    top:690px;
+    left:160px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.google{
+    position:absolute;
+    top:730px;
+    left:160px;
+    --background: transparent;
+    --background-activated: #f0fff56b;
+}
+
+.remember::part(container) {
+    border-radius: 6px;
+    border: 2px solid #008211;
+  }
+
+.forgotPswd{
+    position: absolute;
+    top:525px;
+    left:240px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.text{
+    position: absolute;
+    top:810px;
+    left:40px;
+    color: #5A7964;
+    font-weight: bold;
+    font-size: 17px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.signUp{
+    position: absolute;
+    top:827px;
+    left:280px;
+    color: #003F5C;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+}
