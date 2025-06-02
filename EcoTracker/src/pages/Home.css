@@ -1,0 +1,35 @@
+.fondo {
+    --background: #F0F0E9;
+}
+
+.logo-header-home {
+    top: 12px;
+    left: 370px;
+    width: 40px;
+    height: 38px;
+    position: absolute;
+}
+
+.logo-name-home {
+    width: 160px;
+    top: 20px;
+    position: absolute;
+    left: 10 px;
+    left: 27px;
+}
+
+.div-header {
+    top: 59px;
+    position: absolute;
+    width: 430px;
+    height: 3px;
+    background-color: black;
+}
+
+.div-footer {
+    top: 861px;
+    position: absolute;
+    width: 430px;
+    height: 3px;
+    background-color: black;
+}
