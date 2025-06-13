@@ -1,0 +1,14 @@
+.custom-tab-bar {
+  --background: #003F5C;
+  --color: #ffffff;
+  --color-selected: #ffffff;
+  --border: none;
+  box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.custom-tab-bar .tab-selected {
+  background: linear-gradient(90deg, #547686 0%, #5A7964 100%);
+  border-radius: 12px;
+  transition: background 0.3s;
+}

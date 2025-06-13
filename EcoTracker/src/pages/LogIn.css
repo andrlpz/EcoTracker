@@ -1,166 +1,122 @@
-.bck{
+.bck {
     --background: #F0F0E9;
+    background-color: var(--background);
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.log{
-    height: 78px;
-    width: 80px;
-    top: 30px;
-    left: 180px;
-    position:absolute;
+.log {
+    height: 5vh;
+    width: 12vh;
+    position: absolute;
+    top: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.rectangulo{
-    width: 286px;
-    height: 64px;
+.rectangulo {
+    width: 70vw;
+    max-width: 286px;
+    height: 8vh;
+    max-height: 64px;
     border-radius: 60px;
-    position: absolute;
     background: #C2CDC1;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    top:140px;
-    left: 70px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 15vh;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.welcome{
-    color: #5A7964;
+.welcome {
     text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 30px;
+    color: #5A7964;
+    font-size: 2.2em;
     font-weight: bold;
-    margin: 15px;
+    margin-top: 1vh;
 }
 
-.name{
+.name,
+.pswd,
+.txlog,
+.text,
+.signUp {
     position: absolute;
-    top:240px;
-    left: 40px;
     color: #5A7964;
     font-weight: bold;
-    font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
 }
 
-#InputNom{
+
+.name {
+    top: 26vh;
+    left: 10vw;
+}
+
+.pswd {
+    top: 42vh;
+    left: 10vw;
+}
+
+.txlog {
+    top: 72vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1em;
+}
+
+.text {
+    top: 85vh;
+    left: 10vw;
+    font-size: 1.1em;
+}
+
+.signUp {
+    top: 86.5vh;
+    left: 32vh;
+    right: 10vw;
+    color: #003F5C;
+    font-size: 1.1em;
+}
+
+
+#InputNom,
+#InputPswd {
+    width: 80vw;
+    max-width: 355px;
+    height: 6vh;
     border-radius: 5px;
-    width: 355px;
-    height: 40px;
-    position: absolute;
     background-color: #DADAC7;
-    left: 35px;
-    top: 300px; 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.pswd{
-    position: absolute;
-    top:365px;
-    left: 40px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+#InputNom {
+    top: 31vh;
 }
 
-#InputPswd{
-    border-radius: 5px;
-    width: 355px;
-    height: 40px;
-    position: absolute;
-    background-color: #DADAC7;
-    left: 35px;
-    top: 425px;
+#InputPswd {
+    top: 47vh;
 }
 
-.remember{
-    position: absolute;
-    top:520px;
-    left: 30px;
-    --size: 25px;
-    --checkbox-background-checked: #6b9577;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 17px;
-    font-family: 'Montserrat', sans-serif;
-}
 
-.remember::part(container) {
-    border-radius: 6px;
-    border: 2px solid #008211;
-  }
-
-.forgotPswd{
+.logIn {
     position: absolute;
-    top:525px;
-    left:240px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.logIn{
-    position: absolute;
-    top:600px;
-    left:90px;
-    width: 229px;
-    height: 48px;
-    border-radius: 10px;
+    top: 63vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60vw;
+    max-width: 229px;
+    height: 6vh;
+    max-height: 48px;
+    border-radius: 30px;
+    background-color: #003F5C;
     color: #DADAC7;
     font-weight: bold;
-    font-size: 19px;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
     --background: #003F5C;
     --background-activated: #054c6d;
-}
-
-.txlog{
-    position: absolute;
-    top:690px;
-    left:160px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.google{
-    position:absolute;
-    top:730px;
-    left:160px;
-    --background: transparent;
-    --background-activated: #f0fff56b;
-}
-
-.remember::part(container) {
-    border-radius: 6px;
-    border: 2px solid #008211;
-  }
-
-.forgotPswd{
-    position: absolute;
-    top:525px;
-    left:240px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.text{
-    position: absolute;
-    top:810px;
-    left:40px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 17px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.signUp{
-    position: absolute;
-    top:827px;
-    left:280px;
-    color: #003F5C;
-    font-weight: bold;
-    font-size: 18px;
-    font-family: 'Montserrat', sans-serif;
 }

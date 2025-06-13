@@ -1,0 +1,70 @@
+.modern-content {
+    --background: #F0F0E9;
+    padding: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.main-title {
+    background: linear-gradient(135deg, #60aabb 0%, #4dc77a 100%);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    padding: 14px 24px;
+    border-radius: 28px;
+    margin: 16px auto;
+    width: fit-content;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modern-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    background: white;
+    transition: transform 0.3s;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modern-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f1f1f;
+    margin: 10px 0 0 0;
+}
+
+.card-desc {
+    font-size: 18px;
+    color: #5a5a5a;
+    padding-bottom: 16px;
+}
+
+.back-button {
+    display: inline-block;
+    background: #003F5C;
+    color: white;
+    padding: 10px 10px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.2s;
+}
