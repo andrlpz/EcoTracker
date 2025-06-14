@@ -53,10 +53,6 @@ function SignUp() {
             <div>
               <IonButton className='SignUp'>Sign Up</IonButton>
             </div>
-            <p className='txsign'>Sign up with</p>
-            <div>
-              <IonButton className='google2'><img src="../../assets/google.png" width='50px' height='50px'/></IonButton>
-            </div>
       
       
             <div> 

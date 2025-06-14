@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Inicio from './pages/Inicio';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
-import Cuenta from './pages/Cuenta';
+import Tabs from './pages/Tabs';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -44,12 +44,6 @@ const App: React.FC = () => (
   <IonApp>
     <IonReactRouter>
       <IonRouterOutlet>
-        <Route exact path="/home">
-          <Home />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
         <Route exact path="/inicio">
           <Inicio />
         </Route>
@@ -59,8 +53,9 @@ const App: React.FC = () => (
         <Route exact path="/SignUp">
           <SignUp />
         </Route>
-        <Route exact path="/Cuenta">
-          <Cuenta />
+        <Route path="/tabs" component={Tabs} />
+        <Route exact path="/">
+          <Redirect to="/tabs" />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
