@@ -1,0 +1,80 @@
+.recycling-tema {
+    border-radius: 15px;
+    overflow: hidden;
+    height: 200px;
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.tema-background {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+}
+
+.tema-background::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    z-index: 1;
+}
+
+.overlay {
+    position: relative;
+    z-index: 2;
+    background: none;
+    color: white;
+    padding-bottom: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100%;
+    width: 100%;
+}
+
+
+.text-content h2 {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.text-content p {
+    font-size: 1rem;
+    margin: 8px 0 0 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.play-icon {
+    position: absolute;
+    right: 16px;
+    top: 130px;
+    bottom: 16px;
+    font-size: 3rem;
+    color: white;
+}
+
+.logoTemas {
+    height: 5vh;
+    width: 10vh;
+    position: absolute;
+    top: 3vh;
+    left: 85%;
+    transform: translateX(-50%);
+}
+
+.temas {
+    color: #0A3A4F;
+    position: relative;
+    left: 6%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 5vh 0;
+}

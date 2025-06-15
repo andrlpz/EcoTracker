@@ -1,155 +1,145 @@
-.fondo{
+.fondo {
     --background: #F0F0E9;
+    background-color: var(--background);
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
 }
 
-.log{
-    height: 78px;
-    width: 80px;
-    top: 30px;
-    left: 180px;
-    position:absolute;
-}
-
-.rectangulo{
-    width: 286px;
-    height: 64px;
-    border-radius: 60px;
+.log {
+    height: 5vh;
+    width: 12vh;
     position: absolute;
-    background: #C2CDC1;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    top:140px;
-    left: 70px;
+    top: 3vh;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.text1{
+.rectangulo {
+    width: 70vw;
+    max-width: 286px;
+    height: 8vh;
+    max-height: 64px;
+    border-radius: 60px;
+    background: #C2CDC1;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 15vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.text1 {
     color: #5A7964;
     text-align: center;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 30px;
+    font-size: 2.2em;
     font-weight: bold;
-    margin: 15px;
+    margin-top: 1vh;
 }
 
-.name{
+.name,
+.mail,
+.pswd2,
+.permission,
+.txsign,
+.text2,
+.textLog {
     position: absolute;
-    top:230px;
-    left: 40px;
+    left: 10vw;
     color: #5A7964;
     font-weight: bold;
-    font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
+    --track-background-checked: #003F5C;
 }
 
-#InputNom{
-    border-radius: 5px;
-    width: 355px;
-    height: 40px;
-    position: absolute;
+
+.name {
+    top: 28vh;
+}
+
+.mail {
+    top: 40vh;
+}
+
+.pswd2 {
+    top: 52vh;
+}
+
+.permission {
+    top: 66vh;
+    font-size: em;
+}
+
+.txsign {
+    top: 82vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.95em;
+}
+
+.text2 {
+    top: 90vh;
+    left: 12vw;
+    font-size: 1.3¿2em;
+}
+
+.textLog {
+    top: 91.5vh;
+    left: 70vw;
+    color: #003F5C;
+    font-size: 1.2em;
+}
+
+#InputNom,
+#InputMail,
+#InputPswd2 {
+    border-radius: 10px;
+    width: 80vw;
+    max-width: 355px;
+    height: 6vh;
     background-color: #DADAC7;
-    left: 35px;
-    top: 290px; 
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.mail{
-    position: absolute;
-    top:340px;
-    left: 40px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+#InputNom {
+    top: 33vh;
 }
 
-#InputMail{
-    border-radius: 5px;
-    width: 355px;
-    height: 40px;
-    position: absolute;
-    background-color: #DADAC7;
-    left: 35px;
-    top: 400px; 
+#InputMail {
+    top: 45vh;
 }
 
-.pswd2{
-    position: absolute;
-    top:450px;
-    left: 40px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 20px;
-    font-family: 'Montserrat', sans-serif;
+#InputPswd2 {
+    top: 57vh;
 }
 
-#InputPswd2{
-    border-radius: 5px;
-    width: 355px;
-    height: 40px;
-    position: absolute;
-    background-color: #DADAC7;
-    left: 35px;
-    top: 510px;
-}
 
-.SignUp{
+.SignUp {
     position: absolute;
-    top:650px;
-    left:90px;
-    width: 229px;
-    height: 48px;
+    top: 72vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60vw;
+    max-width: 229px;
+    height: 6vh;
+    max-height: 48px;
     border-radius: 10px;
     color: #DADAC7;
     font-weight: bold;
-    font-size: 19px;
-    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1em;
     --background: #003F5C;
     --background-activated: #054c6d;
 }
 
-.permission{
-    position: absolute;
-    top:580px;
-    left: 40px;
-    --track-background-checked: #6b9577;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 17px;
-    font-family: 'Montserrat', sans-serif;
-}
+@media (min-width: 768px) {
+    .text1 {
+        font-size: 2.2em;
+    }
 
-.txsign{
-    position: absolute;
-    top:730px;
-    left:155px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.google2{
-    position:absolute;
-    top:770px;
-    left:165px;
-    --background: transparent;
-    --background-activated: #f0fff56b;
-}
-
-.text2{
-    position: absolute;
-    top:850px;
-    left:50px;
-    color: #5A7964;
-    font-weight: bold;
-    font-size: 17px;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.textLog{
-    position: absolute;
-    top:866px;
-    left:300px;
-    color: #003F5C;
-    font-weight: bold;
-    font-size: 18px;
-    font-family: 'Montserrat', sans-serif;
+    .SignUp {
+        font-size: 1.3em;
+    }
 }
