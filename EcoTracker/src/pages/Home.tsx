@@ -90,7 +90,7 @@ const Home: React.FC = () => {
           <div className='div-header'>
           </div>
         </IonHeader>
-        <div style={{ height: 'calc(100vh - 120px)', width: '100%', position: 'relative', marginTop: '65px' }}>
+        <div style={{ height: '100vh', width: '100%', marginTop: '7vh' }}>
           <MapContainer
             center={userPosition ?? [51.505, -0.09]}
             zoom={13}

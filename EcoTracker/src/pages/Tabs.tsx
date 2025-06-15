@@ -2,7 +2,7 @@ import React from 'react';
 import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonRouterOutlet } from '@ionic/react';
 import { Route, Redirect } from 'react-router-dom';
 import { mapOutline, informationCircleOutline, personCircleOutline } from 'ionicons/icons';
-import Mapa from './Mapa';
+import Home from './Home';
 import Informacion from './Informacion';
 import Cuenta from './Cuenta';
 import Elemento1 from './Elemento1';
@@ -12,7 +12,7 @@ import './Tabs.css';
 const Tabs: React.FC = () => (
   <IonTabs>
     <IonRouterOutlet>
-      <Route exact path="/tabs/mapa" component={Mapa} />
+      <Route exact path="/tabs/mapa" component={Home} />
       <Route exact path="/tabs/informacion" component={Informacion} />
       <Route exact path="/tabs/cuenta" component={Cuenta} />
       <Redirect exact from="/tabs" to="/tabs/mapa" />
