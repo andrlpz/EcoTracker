@@ -15,7 +15,7 @@
     width: 17vh;
     top: 2vh;
     position: absolute;
-    left: 5vw;
+    left: 4vw;
 }
 
 .div-header {
@@ -32,4 +32,23 @@
     width: 430px;
     height: 3px;
     background-color: black;
+}
+
+.panel {
+    position: fixed;
+    top: 7vh;
+    right: 0;
+    height: 93vh;
+    width: 40vw;
+    background: #fff;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.button-panel {
+    background-color: transparent;
+    position: fixed;
+    top: 8vh;
+    width: 7vw;
+    z-index: 1000;
 }

@@ -9,10 +9,8 @@
 .logo {
     position: absolute;
     width: 90vw;
-    max-width: 400px;
-    height: auto;
     top: 30vh;
-    left: 7vw;
+    left: 5vw;
 }
 
 @media (min-width: 1024px) {

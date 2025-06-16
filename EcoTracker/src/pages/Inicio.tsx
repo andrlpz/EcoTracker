@@ -11,9 +11,9 @@ function Inicio() {
   return (
     <IonPage>
       <IonContent className='fondo'>
-      <div className='logo'>
-        <img src="../../assets/logo.png" />
-      </div>  
+        <div className='logo'>
+          <img src="../../assets/logo.png" />
+        </div>
       </IonContent>
     </IonPage>
   );
