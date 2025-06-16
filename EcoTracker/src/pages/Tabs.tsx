@@ -5,6 +5,7 @@ import { mapOutline, informationCircleOutline, personCircleOutline } from 'ionic
 import Home from './Home';
 import Informacion from './Informacion';
 import Cuenta from './Cuenta';
+import Inicio from './Inicio';
 import Elemento1 from './Elemento1';
 import Elemento2 from './Elemento2';
 import './Tabs.css';
@@ -12,6 +13,7 @@ import './Tabs.css';
 const Tabs: React.FC = () => (
   <IonTabs>
     <IonRouterOutlet>
+      <Route exact path="/tabs/inicio" component={Inicio} />
       <Route exact path="/tabs/mapa" component={Home} />
       <Route exact path="/tabs/informacion" component={Informacion} />
       <Route exact path="/tabs/cuenta" component={Cuenta} />

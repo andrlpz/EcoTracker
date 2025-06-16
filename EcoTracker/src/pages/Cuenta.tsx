@@ -1,7 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonTabs, IonTabBar, IonImg, IonTabButton, IonIcon, IonLabel, IonRouterOutlet, IonFooter, IonButton } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useState } from 'react';
-
+import { obtenerUsuario } from '../services/userRegister';
+import { useEffect } from 'react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import './Cuenta.css';
@@ -35,7 +36,20 @@ const slidesData: SlideData[] = [
 ];
 
 function Cuenta() {
-  const [activeSlide, setActiveSlide] = useState<SlideData | null>(null);
+  const [usuario, setUsuario] = useState({nombre: '', usuario: '' });
+  useEffect(() => {
+    const cargarUsuario = async () => {
+      const usuarioId = localStorage.getItem("usuarioId");
+      if (usuarioId) {
+        const datosUsuario = await obtenerUsuario(usuarioId);
+        setUsuario(datosUsuario);
+      }
+    };
+    cargarUsuario();
+  }, []);
+
+const [activeSlide, setActiveSlide] = useState<SlideData | null>(null);
+
   return (
     <IonPage>
       <IonHeader>
@@ -51,8 +65,8 @@ function Cuenta() {
             className="profile-image"
           />
           <div className="profile-info">
-            <div className="profile-name">Daira Helen Andrea</div>
-            <div className="profile-rank">Recycler</div>
+            <div className="profile-name">{usuario.nombre}</div>
+            <div className="profile-rank">{usuario.usuario}</div>
           </div>
         </div>
         <div>

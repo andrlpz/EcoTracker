@@ -1,13 +1,8 @@
 import { IonContent, IonFooter, IonHeader, IonPage } from '@ionic/react';
 import './Home.css';
-import { playCircle, radio, library, search } from 'ionicons/icons';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { LatLngExpression } from 'leaflet';
-
-import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-
+import { verificarCredenciales } from "../services/userRegister.js"
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useEffect, useState } from 'react';
@@ -38,11 +33,7 @@ const currentIcon = new L.Icon({
 const Home: React.FC = () => {
   const [userPosition, setUserPosition] = useState<[number, number] | null>(null);
 
-  function SetViewOnUser({ position }: { position: [number, number] }) {
-    const map = useMap();
-    map.setView(position, map.getZoom());
-    return null;
-  }
+  const [showSidebar, setShowSidebar] = useState(true);
 
   function FixMapResize() {
     const map = useMap();
@@ -51,6 +42,18 @@ const Home: React.FC = () => {
         map.invalidateSize(); // redibuja del mapa
       }, 300);
     }, [map]);
+    return null;
+  }
+  
+  const [hasCentered, setHasCentered] = useState(false);
+  function SetViewOnUser({ position }: { position: [number, number] }) {
+    const map = useMap();
+    useEffect(() => {
+      if (!hasCentered && position) {
+        map.setView(position, map.getZoom());
+        setHasCentered(true);
+      }
+    }, [position, hasCentered, map]);
     return null;
   }
 
@@ -72,29 +75,38 @@ const Home: React.FC = () => {
 
   //colocar las posiciones de los markers y el texto que se mostrará en el popup
   const markers: { position: [number, number]; popupText: string }[] = [
-    { position: [20.62436592459012, -103.42733791349242], popupText: 'Marker 1'},
+    { position: [20.62436592459012, -103.42733791349242], popupText: 'Marker 1' },
     { position: [51.515, -0.1], popupText: 'Marker 2' },
     { position: [51.525, -0.11], popupText: 'Marker 3' },
   ];
 
   return (
     <IonPage>
+      <IonHeader>
+        <div className='logo-header-home'>
+          <img src="../../assets/Logo 2.png"></img>
+        </div>
+        <div className='logo-name-home'>
+          <img src="../../assets/EcoTracker.png"></img>
+        </div>
+        <div className='div-header'>
+        </div>
+      </IonHeader>
       <IonContent fullscreen className='fondo'>
-        <IonHeader>
-          <div className='logo-header-home'>
-            <img src="../../assets/Logo 2.png"></img>
-          </div>
-          <div className='logo-name-home'>
-            <img src="../../assets/EcoTracker.png"></img>
-          </div>
-          <div className='div-header'>
-          </div>
-        </IonHeader>
-        <div style={{ height: '100vh', width: '100%', marginTop: '7vh' }}>
+        <button className='button-panel'
+          style={{
+            right: showSidebar ? '41vw' : "3vw",
+            transform: showSidebar ? 'scaleX(1)' : "scaleX(-1)",
+          }}
+          onClick={() => setShowSidebar((v) => !v)}
+        >
+          <img src="../../assets/display.png"></img>
+        </button>
+        <div style={{ height: '93vh', width: '100%', marginTop: '7vh' }}>
           <MapContainer
-            center={userPosition ?? [51.505, -0.09]}
+            center={userPosition ?? [20.676417, -103.415056]}
             zoom={13}
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: '93vh', width: '100%' }}
             attributionControl={true}
           >
             <FixMapResize />
@@ -108,20 +120,19 @@ const Home: React.FC = () => {
               </Marker>
             ))}
             {userPosition && (
-              <>
                 <Marker position={userPosition} icon={currentIcon}>
                   <Popup>You're here</Popup>
                 </Marker>
-                <SetViewOnUser position={userPosition} />
-              </>
             )}
+            {userPosition && <SetViewOnUser position={userPosition} />}
           </MapContainer>
+          {showSidebar && (
+            <div className='panel'>
+            </div>
+          )}
         </div>
-        <IonFooter>
-          <div className='div-footer'></div>
-        </IonFooter>
       </IonContent>
-    </IonPage>
+    </IonPage >
   );
 };
 
