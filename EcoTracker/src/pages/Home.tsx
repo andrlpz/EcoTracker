@@ -2,10 +2,10 @@ import { IonContent, IonFooter, IonHeader, IonPage } from '@ionic/react';
 import './Home.css';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import { verificarCredenciales } from "../services/userRegister.js"
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useEffect, useState } from 'react';
+import { obtenerSitio } from "../services/userRegister.js"
 
 //remplazarlo por el icono del marker que quieras usar
 import customMarkerIcon from '../img/point.png';
