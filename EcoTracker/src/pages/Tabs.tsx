@@ -7,6 +7,7 @@ import Informacion from './Informacion';
 import Cuenta from './Cuenta';
 import Elemento1 from './Elemento1';
 import Elemento2 from './Elemento2';
+import Elemento3 from './Elemento3'; // Assuming you have this component
 import './Tabs.css';
 
 const Tabs: React.FC = () => (
@@ -18,6 +19,7 @@ const Tabs: React.FC = () => (
       <Redirect exact from="/tabs" to="/tabs/mapa" />
       <Route exact path="/tabs/elemento/1" component={Elemento1} />
       <Route exact path="/tabs/elemento/2" component={Elemento2} />
+      <Route exact path="/tabs/elemento/3" component={Elemento3} />
       <Redirect exact from="/tabs" to="/tabs/mapa" />
     </IonRouterOutlet>
 

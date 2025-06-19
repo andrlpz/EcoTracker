@@ -43,6 +43,8 @@ const Informacion: React.FC = () => {
                 router.push('/tabs/elemento/1', 'forward');
               } else if (index === 1) {
                 router.push('/tabs/elemento/2', 'forward');
+              } else if (index === 2) {
+                router.push('/tabs/elemento/3', 'forward');
               } else {
                 router.push(`/tabs/elemento/${index + 1}`, 'forward');
               }
