@@ -61,19 +61,8 @@ export const obtenerUsuario = async (usuarioId) => {
     }
 };
 
-export const obtenerSitio = async (sitioId) => {
-    try {
-        const sitioRef = doc(db, "usuarios", sitioId);
-        const sitioSnap = await getDoc(sitioRef);
-        if (sitioSnap.exists()) {
-            console.log("Datos del sitio: ", sitioSnap.data());
-            return sitioSnap.data(); //Regresa los datos del sitio
-        } else {
-            console.log("No se encontro el sitio");
-            return null;
-        }
-    } catch (error) {
-        console.error("Error al obtener sitio: ", error);
-        return null;
-    }
-};
+export async function obtenerSitios() {
+  const sitiosCol = collection(db, "sites");
+  const sitiosSnapshot = await getDocs(sitiosCol);
+  return sitiosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+}

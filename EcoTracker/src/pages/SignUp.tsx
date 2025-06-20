@@ -3,7 +3,7 @@ import { IonContent, IonToggle, IonInput, IonCheckbox, IonHeader, IonPage, IonTi
 import { IonReactRouter } from '@ionic/react-router';
 import { useHistory } from 'react-router-dom';
 import { useState } from 'react';
-import { registrarUsuario } from "../services/userRegister.js";
+import { registrarUsuario } from "../services/firebaseFunctions.js";
 import { Route, Redirect } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
 import './SignUp.css';
