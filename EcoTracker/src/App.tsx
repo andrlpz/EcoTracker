@@ -6,7 +6,12 @@ import Home from './pages/Home';
 import Inicio from './pages/Inicio';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
+<<<<<<< Updated upstream
 import Tabs from './pages/Tabs';
+=======
+import Cuenta from './pages/Cuenta';
+import Informacion from './pages/Informacion';
+>>>>>>> Stashed changes
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -56,6 +61,9 @@ const App: React.FC = () => (
         <Route path="/tabs" component={Tabs} />
         <Route exact path="/">
           <Redirect to="/tabs" />
+        </Route>
+        <Route exact path="/Informacion">
+          <Informacion />
         </Route>
       </IonRouterOutlet>
     </IonReactRouter>
