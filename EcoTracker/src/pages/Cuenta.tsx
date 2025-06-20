@@ -1,4 +1,4 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonTabs, IonTabBar, IonImg, IonTabButton, IonIcon, IonLabel, IonRouterOutlet, IonFooter, IonButton } from '@ionic/react';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonTabs, IonTabBar, IonImg, IonTabButton, IonIcon, IonLabel, IonRouterOutlet, IonFooter, IonButton, useIonViewWillEnter } from '@ionic/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useState } from 'react';
 import { obtenerUsuario } from '../services/firebaseFunctions';
@@ -37,7 +37,7 @@ const slidesData: SlideData[] = [
 
 function Cuenta() {
   const [usuario, setUsuario] = useState({nombre: '', usuario: '' });
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     const cargarUsuario = async () => {
       const usuarioId = localStorage.getItem("usuarioId");
       if (usuarioId) {

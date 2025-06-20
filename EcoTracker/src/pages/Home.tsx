@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonCheckbox, IonHeader, IonItem, IonPage } from '@ionic/react';
+import { IonButton, IonContent, IonCheckbox, IonHeader, IonItem, IonPage, useIonViewWillEnter } from '@ionic/react';
 import './Home.css';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { IonList, IonSelect, IonSelectOption } from '@ionic/react';
 import { useEffect, useState } from 'react';
-import { obtenerSitios, agregarSitio, } from "../services/firebaseFunctions";
+import { obtenerSitios, agregarSitio, obtenerFavoritos, quitarSitio } from "../services/firebaseFunctions";
 
 //remplazarlo por el icono del marker que quieras usar
 import customMarkerIcon from '../img/point.png';
@@ -95,7 +95,7 @@ const Home: React.FC = () => {
   }
 
   const [markers, setMarkers] = useState<any[]>([]);
-  useEffect(() => {
+  useIonViewWillEnter(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -115,6 +115,16 @@ const Home: React.FC = () => {
     };
     cargarMarkers();
   }, []);
+
+  useIonViewWillEnter(() => {
+    const cargarFavoritos = async () => {
+      if (usuarioId) {
+        const favs = await obtenerFavoritos(usuarioId);
+        setFavoritos(favs);
+      }
+    };
+    cargarFavoritos();
+  }, [usuarioId]);
 
   return (
     <IonPage>
@@ -168,10 +178,9 @@ const Home: React.FC = () => {
                         <p className='name-site'>{marker.name}</p>
                         <button className='star'
                           onClick={async () => {
-                            if (!usuarioId) {
-                              return;
-                            }
+                            if (!usuarioId) return;
                             if (favoritos.includes(marker.id)) {
+                              await quitarSitio(usuarioId, marker.id);
                               setFavoritos(prev => prev.filter(id => id !== marker.id));
                             } else {
                               await agregarSitio(usuarioId, marker.id);
@@ -179,7 +188,9 @@ const Home: React.FC = () => {
                             }
                           }}>
                           <img
-                            src={favoritos.includes(marker.id) ? "/assets/star-filled.png" : "/assets/star.png"} />
+                            src={favoritos.includes(marker.id) ? "/assets/star-filled.png" : "/assets/star.png"}
+                            alt="Favorito"
+                          />
                         </button>
                       </div>
                       <img src={marker.photo || '/assets/logo.png'} />

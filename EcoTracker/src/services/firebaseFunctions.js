@@ -67,6 +67,15 @@ export async function obtenerSitios() {
   return sitiosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
 
+export const obtenerFavoritos = async (usuarioId) => {
+  const usuarioRef = doc(db, "usuarios", usuarioId);
+  const usuarioSnap = await getDoc(usuarioRef);
+  if (usuarioSnap.exists()) {
+    return usuarioSnap.data().savedSites || [];
+  }
+  return [];
+};
+
 export const agregarSitio = async (usuarioId, sitioId) => {
   const usuarioRef = doc(db, "usuarios", usuarioId);
   await updateDoc(usuarioRef, {
