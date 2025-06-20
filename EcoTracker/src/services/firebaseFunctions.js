@@ -1,5 +1,5 @@
 import { db } from "../firebaseConfig";
-import { collection, addDoc, updateDoc, getDoc, query, where, getDocs, doc } from "firebase/firestore";
+import { collection, addDoc, updateDoc, getDoc, query, where, getDocs, doc, arrayRemove, arrayUnion } from "firebase/firestore";
 
 export const registrarSitio = async (sitio) => {
     console.log(sitio)
@@ -66,3 +66,17 @@ export async function obtenerSitios() {
   const sitiosSnapshot = await getDocs(sitiosCol);
   return sitiosSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 }
+
+export const agregarSitio = async (usuarioId, sitioId) => {
+  const usuarioRef = doc(db, "usuarios", usuarioId);
+  await updateDoc(usuarioRef, {
+    savedSites: arrayUnion(sitioId)
+  });
+};
+
+export const quitarSitio = async (usuarioId, sitioId) => {
+  const usuarioRef = doc(db, "usuarios", usuarioId);
+  await updateDoc(usuarioRef, {
+    savedSites: arrayRemove(sitioId)
+  });
+};

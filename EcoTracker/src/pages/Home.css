@@ -26,12 +26,30 @@
     background-color: black;
 }
 
-.div-footer {
-    top: 861px;
-    position: absolute;
-    width: 430px;
-    height: 3px;
-    background-color: black;
+.popup-content {
+    width: 50vw !important;
+    height: 30vh !important;
+    overflow-y: auto !important;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    box-sizing: border-box;
+}
+
+.popup-header {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3vw;
+}
+
+.star {
+    position: relative;
+    background-color: transparent;
+    width: 20px;
 }
 
 .panel {
@@ -125,4 +143,13 @@
 .ul-visible-sites {
     overflow-y: auto;
     width: 100%;
+}
+
+.name-site {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    color: black;
+    font-size: 15px;
+    width: 100%;
+    display: inline-block;
 }

@@ -6,7 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { IonList, IonSelect, IonSelectOption } from '@ionic/react';
 import { useEffect, useState } from 'react';
-import { obtenerSitios } from "../services/firebaseFunctions";
+import { obtenerSitios, agregarSitio, } from "../services/firebaseFunctions";
 
 //remplazarlo por el icono del marker que quieras usar
 import customMarkerIcon from '../img/point.png';
@@ -31,6 +31,14 @@ const currentIcon = new L.Icon({
   shadowSize: [41, 41], // Tamaño de la sombra
 });
 
+function arraysAreEqual(a: any[], b: any[]) {
+  if (a.length !== b.length) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i]?.id !== b[i]?.id) return false;
+  }
+  return true;
+}
+
 function UpdateVisibleMarkers({ markers, setVisibleMarkers }: { markers: any[], setVisibleMarkers: (m: any[]) => void }) {
   const map = useMap();
 
@@ -40,14 +48,14 @@ function UpdateVisibleMarkers({ markers, setVisibleMarkers }: { markers: any[], 
       const visibles = markers
         .filter(marker => marker && typeof marker.lat === 'number' && typeof marker.lon === 'number')
         .filter(marker => bounds.contains([marker.lat, marker.lon]));
-      setVisibleMarkers(visibles);
+      setVisibleMarkers((prev: any[]) => arraysAreEqual(prev, visibles) ? prev : visibles);
     }
 
     update();
-    map.on('moveend', update); //listener
+    map.on('moveend', update);
 
     return () => {
-      map.off('moveend', update); // apaga 
+      map.off('moveend', update);
     };
   }, [map, markers]);
 
@@ -56,11 +64,12 @@ function UpdateVisibleMarkers({ markers, setVisibleMarkers }: { markers: any[], 
 
 const Home: React.FC = () => {
   const [userPosition, setUserPosition] = useState<[number, number] | null>(null);
-
   const [showSidebar, setShowSidebar] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
-
   const [materialesSeleccionados, setMaterialesSeleccionados] = useState<string[]>([]);
+  const usuarioId = localStorage.getItem('usuarioId');
+  const [favoritos, setFavoritos] = useState<string[]>([]);
+  const [visibleMarkers, setVisibleMarkers] = useState<any[]>([]);
 
 
   function FixMapResize() {
@@ -86,7 +95,6 @@ const Home: React.FC = () => {
   }
 
   const [markers, setMarkers] = useState<any[]>([]);
-  const [visibleMarkers, setVisibleMarkers] = useState<any[]>([]);
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -156,26 +164,42 @@ const Home: React.FC = () => {
                 <Marker key={index} position={[marker.lat, marker.lon]} icon={customIcon}>
                   <Popup>
                     <div className='popup-content'>
-                      <h3>{marker.name}</h3>
-                      
-                      <img src={marker.photo   || '/assets/logo.png'} />
+                      <div className='popup-header'>
+                        <p className='name-site'>{marker.name}</p>
+                        <button className='star'
+                          onClick={async () => {
+                            if (!usuarioId) {
+                              return;
+                            }
+                            if (favoritos.includes(marker.id)) {
+                              setFavoritos(prev => prev.filter(id => id !== marker.id));
+                            } else {
+                              await agregarSitio(usuarioId, marker.id);
+                              setFavoritos(prev => [...prev, marker.id]);
+                            }
+                          }}>
+                          <img
+                            src={favoritos.includes(marker.id) ? "/assets/star-filled.png" : "/assets/star.png"} />
+                        </button>
+                      </div>
+                      <img src={marker.photo || '/assets/logo.png'} />
                       <p>
-                        Address: {marker.address || 'No address available.'}
+                        <strong>Address: </strong>{marker.address || 'No address available.'}
                       </p>
                       <p>
-                        Bussiness Hours: {marker.bussinessHours || 'No bussiness hours available.'}
+                        <strong>Bussiness Hours: </strong>{marker.bussinessHours || 'No bussiness hours available.'}
                       </p>
                       <p>
-                        Materials: {marker.materials && marker.materials.join(', ')}.
+                        <strong>Materials: </strong>{marker.materials && marker.materials.join(', ')}.
                       </p>
                       <p>
-                        Instructions: {marker.instructions || 'No specific instructions available.'}
+                        <strong>Instructions: </strong>{marker.instructions || 'No specific instructions available.'}
                       </p>
                       <p>
-                        Facilities: {marker.facilities || 'No information available.'}
+                        <strong> Facilities: </strong>{marker.facilities || 'No information available.'}
                       </p>
                       <p>
-                        Contact: {marker.contact || 'No contact available.'}
+                        <strong>Contact: </strong>{marker.contact || 'No contact available.'}
                       </p>
                     </div>
                   </Popup>
@@ -183,7 +207,7 @@ const Home: React.FC = () => {
               ))}
             {userPosition && (
               <Marker position={userPosition} icon={currentIcon}>
-                <Popup>You're here</Popup>
+                <Popup><div className='popup-youre-here'>You're here</div></Popup>
               </Marker>
             )}
             {userPosition && <SetViewOnUser position={userPosition} />}
