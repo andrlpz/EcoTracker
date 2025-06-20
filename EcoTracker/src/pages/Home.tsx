@@ -1,11 +1,12 @@
-import { IonContent, IonFooter, IonHeader, IonPage } from '@ionic/react';
+import { IonButton, IonContent, IonCheckbox, IonHeader, IonItem, IonPage } from '@ionic/react';
 import './Home.css';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import { verificarCredenciales } from "../services/userRegister.js"
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { IonList, IonSelect, IonSelectOption } from '@ionic/react';
 import { useEffect, useState } from 'react';
+import { obtenerSitios } from "../services/firebaseFunctions";
 
 //remplazarlo por el icono del marker que quieras usar
 import customMarkerIcon from '../img/point.png';
@@ -30,10 +31,37 @@ const currentIcon = new L.Icon({
   shadowSize: [41, 41], // Tamaño de la sombra
 });
 
+function UpdateVisibleMarkers({ markers, setVisibleMarkers }: { markers: any[], setVisibleMarkers: (m: any[]) => void }) {
+  const map = useMap();
+
+  useEffect(() => {
+    function update() {
+      const bounds = map.getBounds();
+      const visibles = markers
+        .filter(marker => marker && typeof marker.lat === 'number' && typeof marker.lon === 'number')
+        .filter(marker => bounds.contains([marker.lat, marker.lon]));
+      setVisibleMarkers(visibles);
+    }
+
+    update();
+    map.on('moveend', update); //listener
+
+    return () => {
+      map.off('moveend', update); // apaga 
+    };
+  }, [map, markers]);
+
+  return null;
+}
+
 const Home: React.FC = () => {
   const [userPosition, setUserPosition] = useState<[number, number] | null>(null);
 
   const [showSidebar, setShowSidebar] = useState(true);
+  const [showFilters, setShowFilters] = useState(false);
+
+  const [materialesSeleccionados, setMaterialesSeleccionados] = useState<string[]>([]);
+
 
   function FixMapResize() {
     const map = useMap();
@@ -44,7 +72,7 @@ const Home: React.FC = () => {
     }, [map]);
     return null;
   }
-  
+
   const [hasCentered, setHasCentered] = useState(false);
   function SetViewOnUser({ position }: { position: [number, number] }) {
     const map = useMap();
@@ -57,31 +85,32 @@ const Home: React.FC = () => {
     return null;
   }
 
+  const [markers, setMarkers] = useState<any[]>([]);
+  const [visibleMarkers, setVisibleMarkers] = useState<any[]>([]);
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           setUserPosition([position.coords.latitude, position.coords.longitude]);
-          console.log('Ubicación obtenida:', position.coords);
+          console.log('Ubicación obtenida');
         },
         (error) => {
           console.error('No se pudo obtener la ubicación:', error);
         }
       );
-    } else {
-      console.error('Geolocalización no soportada');
     }
-  }, []);
 
-  //colocar las posiciones de los markers y el texto que se mostrará en el popup
-  const markers: { position: [number, number]; popupText: string }[] = [
-    { position: [20.62436592459012, -103.42733791349242], popupText: 'Marker 1' },
-    { position: [51.515, -0.1], popupText: 'Marker 2' },
-    { position: [51.525, -0.11], popupText: 'Marker 3' },
-  ];
+    // Cargar los puntos desde Firebase
+    const cargarMarkers = async () => {
+      const datosMarkers = await obtenerSitios();
+      setMarkers(datosMarkers);
+    };
+    cargarMarkers();
+  }, []);
 
   return (
     <IonPage>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"></link>
       <IonHeader>
         <div className='logo-header-home'>
           <img src="../../assets/Logo 2.png"></img>
@@ -114,22 +143,175 @@ const Home: React.FC = () => {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             />
-            {markers.map((marker, index) => (
-              <Marker key={index} position={marker.position} icon={customIcon}>
-                <Popup>{marker.popupText}</Popup>
-              </Marker>
-            ))}
-            {userPosition && (
-                <Marker position={userPosition} icon={currentIcon}>
-                  <Popup>You're here</Popup>
+
+            {markers
+              .filter(marker => marker && typeof marker.lat === 'number' && typeof marker.lon === 'number')
+              .filter(marker =>
+                materialesSeleccionados.length === 0 ||
+                (marker.materials && marker.materials.some((mat: string) =>
+                  materialesSeleccionados.includes(mat)
+                ))
+              )
+              .map((marker, index) => (
+                <Marker key={index} position={[marker.lat, marker.lon]} icon={customIcon}>
+                  <Popup>
+                    <div className='popup-content'>
+                      <h3>{marker.name}</h3>
+                      
+                      <img src={marker.photo   || '/assets/logo.png'} />
+                      <p>
+                        Address: {marker.address || 'No address available.'}
+                      </p>
+                      <p>
+                        Bussiness Hours: {marker.bussinessHours || 'No bussiness hours available.'}
+                      </p>
+                      <p>
+                        Materials: {marker.materials && marker.materials.join(', ')}.
+                      </p>
+                      <p>
+                        Instructions: {marker.instructions || 'No specific instructions available.'}
+                      </p>
+                      <p>
+                        Facilities: {marker.facilities || 'No information available.'}
+                      </p>
+                      <p>
+                        Contact: {marker.contact || 'No contact available.'}
+                      </p>
+                    </div>
+                  </Popup>
                 </Marker>
+              ))}
+            {userPosition && (
+              <Marker position={userPosition} icon={currentIcon}>
+                <Popup>You're here</Popup>
+              </Marker>
             )}
             {userPosition && <SetViewOnUser position={userPosition} />}
+            <UpdateVisibleMarkers markers={markers} setVisibleMarkers={setVisibleMarkers} />
           </MapContainer>
-          {showSidebar && (
-            <div className='panel'>
+        </div>
+        <div className={`panel${showSidebar ? '' : ' hidden'}`}>
+          <div className='filter-div'>
+            <p className='filters'>Filters</p>
+            <button className='filter-button'
+              onClick={() => setShowFilters((v) => !v)}
+              style={{
+                transform: showFilters ? 'scaleY(1)' : "scaleY(-1)",
+              }}>
+              <img src="../../assets/filterbutton.png" alt="Close" />
+            </button>
+          </div>
+          {showFilters && (
+            <div className='filter-options'>
+              <IonCheckbox
+                labelPlacement='end'
+                className='checkbox'
+                checked={materialesSeleccionados.includes('Paper')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Paper']
+                      : prev.filter(m => m !== 'Paper')
+                  );
+                }}
+              >
+                Paper
+              </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox'
+                checked={materialesSeleccionados.includes('Plastic')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Plastic']
+                      : prev.filter(m => m !== 'Plastic')
+                  );
+                }}> Plastic </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox'
+                checked={materialesSeleccionados.includes('Cardboard')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Cardboard']
+                      : prev.filter(m => m !== 'Cardboard')
+                  );
+                }}> Cardboard </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox'
+                checked={materialesSeleccionados.includes('Tetrapak')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Tetrapak']
+                      : prev.filter(m => m !== 'Tetrapak')
+                  );
+                }}> Tetrapak </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox' checked={materialesSeleccionados.includes('Oil')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Oil']
+                      : prev.filter(m => m !== 'Oil')
+                  );
+                }}> Oil </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox'
+                checked={materialesSeleccionados.includes('Metal')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Metal']
+                      : prev.filter(m => m !== 'Metal')
+                  );
+                }}> Metal </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox'
+                checked={materialesSeleccionados.includes('Glass')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Glass']
+                      : prev.filter(m => m !== 'Glass')
+                  );
+                }}> Glass </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox'
+                checked={materialesSeleccionados.includes('Electronics')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Electronics']
+                      : prev.filter(m => m !== 'Electronics')
+                  );
+                }}> Electronics </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox'
+                checked={materialesSeleccionados.includes('Batteries')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Batteries']
+                      : prev.filter(m => m !== 'Batteries')
+                  );
+                }}> Batteries </IonCheckbox>
             </div>
           )}
+          <p className='visible-sites'>Visible Sites</p>
+          <ul className='ul-visible-sites'>
+            {visibleMarkers
+              .filter(marker =>
+                materialesSeleccionados.length === 0 ||
+                (marker.materials && marker.materials.some((mat: string) =>
+                  materialesSeleccionados.includes(mat)
+                ))
+              )
+              .map((marker, idx) => (
+                <li key={idx} className='list-visible-markers'>{marker.name}</li>
+              ))}
+          </ul>
         </div>
       </IonContent>
     </IonPage >

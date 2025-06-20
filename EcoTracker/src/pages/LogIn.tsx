@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { Route, Redirect } from 'react-router';
 import ExploreContainer from '../components/ExploreContainer';
 import './LogIn.css';
-import { verificarCredenciales } from "../services/userRegister.js"
+import { verificarCredenciales } from "../services/firebaseFunctions.js"
 
 
 const LogIn: React.FC = () => {
@@ -58,7 +58,6 @@ const LogIn: React.FC = () => {
             clearInput={true}
             fill='solid'
             id='InputNom'
-            color={'warning'}
             onIonInput={(e: any) => setUsuario(e.target.value)}
           ></IonInput>
         </div>
@@ -68,7 +67,6 @@ const LogIn: React.FC = () => {
             clearInput={true}
             fill='solid'
             id='InputPswd'
-            color={'warning'}
             onIonInput={(e: any) => setContrasena(e.target.value)}
 
           ></IonInput>

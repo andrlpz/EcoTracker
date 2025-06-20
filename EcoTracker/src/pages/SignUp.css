@@ -101,6 +101,7 @@
     background-color: #DADAC7;
     position: absolute;
     left: 50%;
+    color: #000000;
     transform: translateX(-50%);
 }
 

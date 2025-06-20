@@ -89,9 +89,12 @@
     height: 6vh;
     border-radius: 5px;
     background-color: #DADAC7;
-    position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    color: #000000;
+    position: absolute;
+
+    box-sizing: border-box;
 }
 
 #InputNom {
