@@ -105,6 +105,13 @@
     transform: translateX(-50%);
 }
 
+#InputNom .input-wrapper,
+#InputMail .input-wrapper,
+#InputPswd2 .input-wrapper {
+    background-color: #DADAC7 !important;
+    color: #000 !important;
+}
+
 #InputNom {
     top: 33vh;
 }

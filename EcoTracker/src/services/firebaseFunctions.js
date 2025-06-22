@@ -76,10 +76,10 @@ export const obtenerFavoritos = async (usuarioId) => {
   return [];
 };
 
-export const agregarSitio = async (usuarioId, sitioId) => {
+export const agregarSitio = async (usuarioId, sitioObj) => {
   const usuarioRef = doc(db, "usuarios", usuarioId);
   await updateDoc(usuarioRef, {
-    savedSites: arrayUnion(sitioId)
+    savedSites: arrayUnion(sitioObj)
   });
 };
 

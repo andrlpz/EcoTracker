@@ -5,7 +5,7 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { IonList, IonSelect, IonSelectOption } from '@ionic/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { obtenerSitios, agregarSitio, obtenerFavoritos, quitarSitio } from "../services/firebaseFunctions";
 
 //remplazarlo por el icono del marker que quieras usar
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
   const usuarioId = localStorage.getItem('usuarioId');
   const [favoritos, setFavoritos] = useState<string[]>([]);
   const [visibleMarkers, setVisibleMarkers] = useState<any[]>([]);
-
+  const markerRefs = useRef<{ [key: string]: L.Marker | null }>({});
 
   function FixMapResize() {
     const map = useMap();
@@ -149,7 +149,7 @@ const Home: React.FC = () => {
         >
           <img src="../../assets/display.png"></img>
         </button>
-        <div style={{ height: '93vh', width: '100%', marginTop: '7vh' }}>
+        <div style={{ height: '93vh', width: '100%', marginTop: '7vh', maxHeight: '93vh' }}>
           <MapContainer
             center={userPosition ?? [20.676417, -103.415056]}
             zoom={14}
@@ -170,10 +170,10 @@ const Home: React.FC = () => {
                   materialesSeleccionados.includes(mat)
                 ))
               )
-              .map((marker, index) => (
-                <Marker key={index} position={[marker.lat, marker.lon]} icon={customIcon}>
+              .map((marker) => (
+                <Marker key={marker.id} position={[marker.lat, marker.lon]} icon={customIcon} ref={ref => { markerRefs.current[marker.id] = ref; }}>
                   <Popup>
-                    <div className='popup-content'>
+                    <div className='popup-content' id='popup-content'>
                       <div className='popup-header'>
                         <p className='name-site'>{marker.name}</p>
                         <button className='star'
@@ -183,7 +183,7 @@ const Home: React.FC = () => {
                               await quitarSitio(usuarioId, marker.id);
                               setFavoritos(prev => prev.filter(id => id !== marker.id));
                             } else {
-                              await agregarSitio(usuarioId, marker.id);
+                              await agregarSitio(usuarioId, marker);
                               setFavoritos(prev => [...prev, marker.id]);
                             }
                           }}>
@@ -200,6 +200,15 @@ const Home: React.FC = () => {
                       <p>
                         <strong>Bussiness Hours: </strong>{marker.bussinessHours || 'No bussiness hours available.'}
                       </p>
+                      <div className='div-days'>
+                        {marker.sunday && <img src="../../assets/sundayopen.png" className='day-open' /> || <img src="../../assets/sunday.png" className='day-icon' />}
+                        {marker.monday && <img src="../../assets/mondayopen.png" className='day-open' /> || <img src="../../assets/monday.png" className='day-icon' />}
+                        {marker.tuesday && <img src="../../assets/tuesdayopen.png" className='day-open' /> || <img src="../../assets/tuesday.png" className='day-icon' />}
+                        {marker.wednesday && <img src="../../assets/wednesdayopen.png" className='day-open' /> || <img src="../../assets/wednesday.png" className='day-icon' />}
+                        {marker.thursday && <img src="../../assets/thursdayopen.png" className='day-open' /> || <img src="../../assets/thursday.png" className='day-icon' />}
+                        {marker.friday && <img src="../../assets/fridayopen.png" className='day-open' /> || <img src="../../assets/friday.png" className='day-icon' />}
+                        {marker.saturday && <img src="../../assets/saturdayopen.png" className='day-open' /> || <img src="../../assets/saturday.png" className='day-icon' />}
+                      </div>
                       <p>
                         <strong>Materials: </strong>{marker.materials && marker.materials.join(', ')}.
                       </p>
@@ -334,7 +343,7 @@ const Home: React.FC = () => {
                 }}> Batteries </IonCheckbox>
             </div>
           )}
-          <p className='visible-sites'>Visible Sites</p>
+          <p className='visible-sites'>Visible Recycling Facilities</p>
           <ul className='ul-visible-sites'>
             {visibleMarkers
               .filter(marker =>
@@ -344,7 +353,13 @@ const Home: React.FC = () => {
                 ))
               )
               .map((marker, idx) => (
-                <li key={idx} className='list-visible-markers'>{marker.name}</li>
+                <li key={marker.id}
+                  className='list-visible-markers'
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    const ref = markerRefs.current[marker.id];
+                    if (ref) ref.openPopup();
+                  }}>{marker.name}</li>
               ))}
           </ul>
         </div>

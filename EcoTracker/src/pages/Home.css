@@ -1,7 +1,7 @@
 @import 'leaflet/dist/leaflet.css';
 
 .fondo {
-    --background: #F0F0E9;
+    --background: #F2F2F2;
 }
 
 .logo-header-home {
@@ -26,9 +26,15 @@
     background-color: black;
 }
 
+.leaflet-popup-content-wrapper {
+    background-color: #F2F2F2 !important;
+}
+
 .popup-content {
+    z-index: 10000;
     width: 100%;
-    height: 30vh;
+    /* max-height: 30vh; */
+    height: 40vh;
     overflow-y: auto;
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
@@ -37,6 +43,7 @@
     word-break: break-all;
     box-sizing: border-box;
 }
+
 
 .popup-header {
     flex-direction: row;
@@ -52,6 +59,29 @@
     width: 20px;
 }
 
+.div-days {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+    height: 10%;
+}
+
+.day-icon {
+    width: 29px;
+    background-color: transparent;
+    margin: 4px;
+}
+
+.day-open {
+    margin-top: 11px;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+}
+
 .panel {
     position: fixed;
     top: 7vh;
@@ -60,7 +90,7 @@
     width: 40vw;
     z-index: 1000;
     overflow-y: auto;
-    background-color: #F0F0E9;
+    background-color: #F2F2F2;
     transform: translateX(0);
     transition: transform 0.3s ease;
     align-items: center;
@@ -95,9 +125,11 @@
 
 .filters,
 .visible-sites {
+    margin: 10px;
     color: black;
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
+    text-align: center;
 }
 
 .filter-button {

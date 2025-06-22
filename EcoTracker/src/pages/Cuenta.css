@@ -94,11 +94,11 @@
 .modal-overlay {
   position: fixed;
   top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 999;
@@ -108,6 +108,7 @@
   background: white;
   padding: 5vw;
   border-radius: 8px;
+
   width: 90vw;
   max-width: 400px;
   text-align: center;
@@ -136,4 +137,8 @@
     height: 300px;
     font-size: 1.5rem;
   }
+}
+
+.modal-content-text{
+  color: black;
 }
