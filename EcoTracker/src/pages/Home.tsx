@@ -180,7 +180,7 @@ const Home: React.FC = () => {
                           onClick={async () => {
                             if (!usuarioId) return;
                             if (favoritos.includes(marker.id)) {
-                              await quitarSitio(usuarioId, marker.id);
+                              await quitarSitio(usuarioId, marker);
                               setFavoritos(prev => prev.filter(id => id !== marker.id));
                             } else {
                               await agregarSitio(usuarioId, marker);
@@ -283,15 +283,25 @@ const Home: React.FC = () => {
                   );
                 }}> Cardboard </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
-                checked={materialesSeleccionados.includes('Tetrapak')}
+                checked={materialesSeleccionados.includes('TetraPak')}
                 onIonChange={e => {
                   const checked = e.detail.checked;
                   setMaterialesSeleccionados(prev =>
                     checked
-                      ? [...prev, 'Tetrapak']
-                      : prev.filter(m => m !== 'Tetrapak')
+                      ? [...prev, 'TetraPak']
+                      : prev.filter(m => m !== 'TetraPak')
                   );
-                }}> Tetrapak </IonCheckbox>
+                }}> TetraPak </IonCheckbox>
+              <IonCheckbox labelPlacement='end' className='checkbox'
+                checked={materialesSeleccionados.includes('Styrofoam')}
+                onIonChange={e => {
+                  const checked = e.detail.checked;
+                  setMaterialesSeleccionados(prev =>
+                    checked
+                      ? [...prev, 'Styrofoam']
+                      : prev.filter(m => m !== 'Styrofoam')
+                  );
+                }}> Styrofoam </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox' checked={materialesSeleccionados.includes('Oil')}
                 onIonChange={e => {
                   const checked = e.detail.checked;

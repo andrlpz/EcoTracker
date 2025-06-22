@@ -46,13 +46,13 @@ function Cuenta() {
             instructions: site.instructions,
             bussinessHours: site.bussinessHours,
             facilities: site.facilities,
-            monday: site.monday || false,
-            tuesday: site.tuesday || false,
-            wednesday: site.wednesday || false,
-            thursday: site.thursday || false,
-            friday: site.friday || false,
-            saturday: site.saturday || false,
-            sunday: site.sunday || false,
+            monday: site.monday,
+            tuesday: site.tuesday,
+            wednesday: site.wednesday,
+            thursday: site.thursday,
+            friday: site.friday,
+            saturday: site.saturday,
+            sunday: site.sunday,
             contact: site.contact,
             address: site.address
           }))
@@ -87,7 +87,7 @@ function Cuenta() {
             {slidesData.map((slide) => (
               <SwiperSlide key={slide.id}>
                 <div className="slide-box" onClick={() => { setActiveSlide(slide); console.log("activeSlide:", slide); }}>
-                  <img className="img-fav-places" src={slide.photo} />
+                  <img className="img-fav-places" src={slide.photo || "/assets/logo.png"} />
                   <p className="name-fav-places">{slide.name}</p>
                 </div>
               </SwiperSlide>

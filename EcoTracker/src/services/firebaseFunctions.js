@@ -83,9 +83,9 @@ export const agregarSitio = async (usuarioId, sitioObj) => {
   });
 };
 
-export const quitarSitio = async (usuarioId, sitioId) => {
+export const quitarSitio = async (usuarioId, sitioObj) => {
   const usuarioRef = doc(db, "usuarios", usuarioId);
   await updateDoc(usuarioRef, {
-    savedSites: arrayRemove(sitioId)
+    savedSites: arrayRemove(sitioObj)
   });
 };
