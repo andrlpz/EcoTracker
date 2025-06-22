@@ -152,7 +152,7 @@ const Home: React.FC = () => {
         <div style={{ height: '93vh', width: '100%', marginTop: '7vh' }}>
           <MapContainer
             center={userPosition ?? [20.676417, -103.415056]}
-            zoom={13}
+            zoom={14}
             style={{ height: '93vh', width: '100%' }}
             attributionControl={true}
           >
