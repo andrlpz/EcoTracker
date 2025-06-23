@@ -1,4 +1,4 @@
-import { IonButton, IonContent, IonCheckbox, IonHeader, IonItem, IonPage, useIonViewWillEnter } from '@ionic/react';
+import { IonButton, IonContent, IonCheckbox, IonHeader, IonItem, IonPage, useIonViewDidEnter, useIonViewWillEnter } from '@ionic/react';
 import './Home.css';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -68,9 +68,9 @@ const Home: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [materialesSeleccionados, setMaterialesSeleccionados] = useState<string[]>([]);
   const usuarioId = localStorage.getItem('usuarioId');
-  const [favoritos, setFavoritos] = useState<string[]>([]);
   const [visibleMarkers, setVisibleMarkers] = useState<any[]>([]);
   const markerRefs = useRef<{ [key: string]: L.Marker | null }>({});
+  const [favoritesSet, setFavoritesSet] = useState<Set<string>>(new Set());
 
   function FixMapResize() {
     const map = useMap();
@@ -108,7 +108,6 @@ const Home: React.FC = () => {
       );
     }
 
-    // Cargar los puntos desde Firebase
     const cargarMarkers = async () => {
       const datosMarkers = await obtenerSitios();
       setMarkers(datosMarkers);
@@ -116,15 +115,35 @@ const Home: React.FC = () => {
     cargarMarkers();
   }, []);
 
-  useIonViewWillEnter(() => {
-    const cargarFavoritos = async () => {
-      if (usuarioId) {
+  useIonViewDidEnter(() => {
+    const loadFavorites = async () => {
+      if (!usuarioId) return;
+      try {
         const favs = await obtenerFavoritos(usuarioId);
-        setFavoritos(favs);
+        setFavoritesSet(new Set(favs));
+      } catch (error) {
+        console.error("Error cargando favoritos:", error);
       }
     };
-    cargarFavoritos();
-  }, [usuarioId]);
+    loadFavorites();
+  });
+
+  const toggleFavorite = async (marker: any) => {
+    if (!usuarioId) return;
+    const newSet = new Set(favoritesSet);
+    const wasFavorite = newSet.has(marker.id);
+    wasFavorite ? newSet.delete(marker.id) : newSet.add(marker.id);
+    setFavoritesSet(newSet);
+    try {
+      wasFavorite
+        ? await quitarSitio(usuarioId, marker)
+        : await agregarSitio(usuarioId, marker);
+    } catch (error) {
+      console.error("Error actualizando favoritos:", error);
+      wasFavorite ? newSet.add(marker.id) : newSet.delete(marker.id);
+      setFavoritesSet(newSet);
+    }
+  };
 
   return (
     <IonPage>
@@ -176,21 +195,14 @@ const Home: React.FC = () => {
                     <div className='popup-content' id='popup-content'>
                       <div className='popup-header'>
                         <p className='name-site'>{marker.name}</p>
-                        <button className='star'
-                          onClick={async () => {
-                            if (!usuarioId) return;
-                            if (favoritos.includes(marker.id)) {
-                              await quitarSitio(usuarioId, marker);
-                              setFavoritos(prev => prev.filter(id => id !== marker.id));
-                            } else {
-                              await agregarSitio(usuarioId, marker);
-                              setFavoritos(prev => [...prev, marker.id]);
-                            }
-                          }}>
+                        <button
+                          className='star'
+                          onClick={() => toggleFavorite(marker)}
+                        >
                           <img
-                            src={favoritos.includes(marker.id) ? "/assets/star-filled.png" : "/assets/star.png"}
-                            alt="Favorito"
-                          />
+                            src={favoritesSet.has(marker.id)
+                              ? "/assets/star-filled.png"
+                              : "/assets/star.png"} />
                         </button>
                       </div>
                       <img src={marker.photo || '/assets/logo.png'} />
@@ -201,13 +213,13 @@ const Home: React.FC = () => {
                         <strong>Bussiness Hours: </strong>{marker.bussinessHours || 'No bussiness hours available.'}
                       </p>
                       <div className='div-days'>
-                        {marker.sunday && <img src="../../assets/sundayopen.png" className='day-open' /> || <img src="../../assets/sunday.png" className='day-icon' />}
-                        {marker.monday && <img src="../../assets/mondayopen.png" className='day-open' /> || <img src="../../assets/monday.png" className='day-icon' />}
-                        {marker.tuesday && <img src="../../assets/tuesdayopen.png" className='day-open' /> || <img src="../../assets/tuesday.png" className='day-icon' />}
-                        {marker.wednesday && <img src="../../assets/wednesdayopen.png" className='day-open' /> || <img src="../../assets/wednesday.png" className='day-icon' />}
-                        {marker.thursday && <img src="../../assets/thursdayopen.png" className='day-open' /> || <img src="../../assets/thursday.png" className='day-icon' />}
-                        {marker.friday && <img src="../../assets/fridayopen.png" className='day-open' /> || <img src="../../assets/friday.png" className='day-icon' />}
-                        {marker.saturday && <img src="../../assets/saturdayopen.png" className='day-open' /> || <img src="../../assets/saturday.png" className='day-icon' />}
+                        {marker.sunday ? (<img src="../../assets/sundayopen.png" className='day-open' />) : (<img src="../../assets/sunday.png" className='day-icon' />)}
+                        {marker.monday ? (<img src="../../assets/mondayopen.png" className='day-open' />) : (<img src="../../assets/monday.png" className='day-icon' />)}
+                        {marker.tuesday ? (<img src="../../assets/tuesdayopen.png" className='day-open' />) : (<img src="../../assets/tuesday.png" className='day-icon' />)}
+                        {marker.wednesday ? (<img src="../../assets/wednesdayopen.png" className='day-open' />) : (<img src="../../assets/wednesday.png" className='day-icon' />)}
+                        {marker.thursday ? (<img src="../../assets/thursdayopen.png" className='day-open' />) : (<img src="../../assets/thursday.png" className='day-icon' />)}
+                        {marker.friday ? (<img src="../../assets/fridayopen.png" className='day-open' />) : (<img src="../../assets/friday.png" className='day-icon' />)}
+                        {marker.saturday ? (<img src="../../assets/saturdayopen.png" className='day-open' />) : (<img src="../../assets/saturday.png" className='day-icon' />)}
                       </div>
                       <p>
                         <strong>Materials: </strong>{marker.materials && marker.materials.join(', ')}.
@@ -301,7 +313,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Styrofoam']
                       : prev.filter(m => m !== 'Styrofoam')
                   );
-                }}> Styrofoam </IonCheckbox>
+                }}> TetraPak </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox' checked={materialesSeleccionados.includes('Oil')}
                 onIonChange={e => {
                   const checked = e.detail.checked;
