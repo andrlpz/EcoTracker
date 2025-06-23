@@ -82,7 +82,7 @@ function Cuenta() {
           </div>
         </div>
         <div>
-          <p className='fav-places'>My favorite places</p>
+          <p className='fav-places'>My favorite Recycling Facilities</p>
           <Swiper spaceBetween={10} slidesPerView={2} pagination={{ clickable: true }}>
             {slidesData.map((slide) => (
               <SwiperSlide key={slide.id}>
