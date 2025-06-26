@@ -74,9 +74,7 @@ const LogIn: React.FC = () => {
         <div>
           <IonButton className='logIn' onClick={handleLogin} >Log in</IonButton>
         </div>
-
-
-        <div>
+        <div className='alt'>
           <p className='text'>Don't have an account?</p>
           <a className='signUp' href="/signup">Sign up</a>
         </div>

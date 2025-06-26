@@ -40,7 +40,7 @@
     font-size: 14px;
     overflow-x: hidden;
     overflow-wrap: break-word;
-    word-break: break-all;
+    word-break: break-word;
     box-sizing: border-box;
 }
 
@@ -86,7 +86,7 @@
     position: fixed;
     top: 7vh;
     right: 0;
-    height: 93vh;
+    height: 87vh;
     width: 40vw;
     z-index: 1000;
     overflow-y: auto;
@@ -102,6 +102,12 @@
 
 .panel.hidden {
     transform: translateX(100%);
+}
+
+.scrollable-content {
+  flex: 1;
+  overflow-y: auto;
+  width: 100%;
 }
 
 .button-panel {
@@ -145,7 +151,6 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 5%;
     overflow: hidden;
 }
 

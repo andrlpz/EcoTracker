@@ -28,42 +28,44 @@ const Informacion: React.FC = () => {
     <IonPage>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"></link>
       <IonContent className="ion-padding" style={{ '--ion-background-color': '#F0F0E9' }}>
-        <div className='temas'> LEARN TO RECYCLE
+        <div className='learn'>
+          <p className='temas'> LEARN TO RECYCLE
+          </p>
+          <img src="../../assets/logoDraw.png" className='logoTemas' />
         </div>
-        <div className='logoTemas'>
-          <img src="../../assets/logoDraw.png" />
-        </div>
-        {temas.map((tema, index) => (
-          <IonCard
-            key={index}
-            button
-            className="recycling-tema"
-            onClick={() => {
-              if (index === 0) {
-                router.push('/tabs/elemento/1', 'forward');
-              } else if (index === 1) {
-                router.push('/tabs/elemento/2', 'forward');
-              } else if (index === 2) {
-                router.push('/tabs/elemento/3', 'forward');
-              } else {
-                router.push(`/tabs/elemento/${index + 1}`, 'forward');
-              }
-            }}
-          >
-            <div
-              className="tema-background"
-              style={{ backgroundImage: `url(${tema.imagen})` }}
+        <div>
+          {temas.map((tema, index) => (
+            <IonCard
+              key={index}
+              button
+              className="recycling-tema"
+              onClick={() => {
+                if (index === 0) {
+                  router.push('/tabs/elemento/1', 'forward');
+                } else if (index === 1) {
+                  router.push('/tabs/elemento/2', 'forward');
+                } else if (index === 2) {
+                  router.push('/tabs/elemento/3', 'forward');
+                } else {
+                  router.push(`/tabs/elemento/${index + 1}`, 'forward');
+                }
+              }}
             >
-              <div className="overlay">
-                <IonCardContent className="text-content">
-                  <h2>{tema.titulo}</h2>
-                  <p>{tema.descripcion}</p>
-                  <IonIcon icon={playCircle} className="play-icon" />
-                </IonCardContent>
+              <div
+                className="tema-background"
+                style={{ backgroundImage: `url(${tema.imagen})` }}
+              >
+                <div className="overlay">
+                  <IonCardContent className="text-content">
+                    <h2>{tema.titulo}</h2>
+                    <p>{tema.descripcion}</p>
+                    <IonIcon icon={playCircle} className="play-icon" />
+                  </IonCardContent>
+                </div>
               </div>
-            </div>
-          </IonCard>
-        ))}
+            </IonCard>
+          ))}
+        </div>
       </IonContent>
     </IonPage>
   );

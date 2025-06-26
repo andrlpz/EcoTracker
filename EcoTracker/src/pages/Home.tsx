@@ -168,7 +168,7 @@ const Home: React.FC = () => {
         >
           <img src="../../assets/display.png"></img>
         </button>
-        <div style={{ height: '93vh', width: '100%', marginTop: '7vh', maxHeight: '93vh' }}>
+        <div style={{ height: '86vh', width: '100%', marginTop: '7vh', maxHeight: '93vh' }}>
           <MapContainer
             center={userPosition ?? [20.676417, -103.415056]}
             zoom={14}
@@ -366,24 +366,26 @@ const Home: React.FC = () => {
             </div>
           )}
           <p className='visible-sites'>Visible Recycling Facilities</p>
-          <ul className='ul-visible-sites'>
-            {visibleMarkers
-              .filter(marker =>
-                materialesSeleccionados.length === 0 ||
-                (marker.materials && marker.materials.some((mat: string) =>
-                  materialesSeleccionados.includes(mat)
-                ))
-              )
-              .map((marker, idx) => (
-                <li key={marker.id}
-                  className='list-visible-markers'
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    const ref = markerRefs.current[marker.id];
-                    if (ref) ref.openPopup();
-                  }}>{marker.name}</li>
-              ))}
-          </ul>
+          <div className='scrollable-content'>
+            <ul className='ul-visible-sites'>
+              {visibleMarkers
+                .filter(marker =>
+                  materialesSeleccionados.length === 0 ||
+                  (marker.materials && marker.materials.some((mat: string) =>
+                    materialesSeleccionados.includes(mat)
+                  ))
+                )
+                .map((marker, idx) => (
+                  <li key={marker.id}
+                    className='list-visible-markers'
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      const ref = markerRefs.current[marker.id];
+                      if (ref) ref.openPopup();
+                    }}>{marker.name}</li>
+                ))}
+            </ul>
+          </div>
         </div>
       </IonContent>
     </IonPage >

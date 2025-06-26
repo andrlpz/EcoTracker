@@ -59,7 +59,7 @@ function SignUp() {
         <div className='rectangulo'>
           <p className='text1'>Get started</p>
         </div>
-        <p className='name'>Name:</p>
+        <p className='name-su'>Name:</p>
         <div className='Nombre' /*SECCION DONDE SE INGRESA EL NOMBRE*/>
           <IonInput  /*DONDE SE INGRESA EL NOMBRE*/
             clearInput={true}
@@ -69,7 +69,7 @@ function SignUp() {
             onIonChange={(e: any) => setRegistro({ ...registro, nombre: e.target.value })}
           ></IonInput>
         </div>
-        <p className='mail'>Username:</p>
+        <p className='mail-su'>Username:</p>
         <div className='Mail' /*SECCION DONDE SE INGRESA EL NOMBRE*/>
           <IonInput  /*DONDE SE INGRESA EL NOMBRE*/
             clearInput={true}
@@ -79,7 +79,7 @@ function SignUp() {
             onIonChange={(e: any) => setRegistro({ ...registro, usuario: e.target.value })}
           ></IonInput>
         </div>
-        <p className='pswd2'>Password:</p>
+        <p className='pswd2-su'>Password:</p>
         <div className='Password2' /*SECCION DONDE SE INGRESA EL NOMBRE*/>
           <IonInput  /*DONDE SE INGRESA EL NOMBRE*/
             clearInput={true}
@@ -90,9 +90,6 @@ function SignUp() {
           ></IonInput>
         </div>
         <div>
-          <IonToggle checked={true} className='permission'>Share my location</IonToggle>
-        </div>
-        <div>
           <IonButton className='SignUp' onClick={registroUsuario}>Sign Up</IonButton>
           {error === true &&
             <h1> Todos los datos son obligatorios</h1>
@@ -100,9 +97,9 @@ function SignUp() {
         </div>
 
 
-        <div>
-          <p className='text2'>Already have an account?</p>
-          <a className='textLog' href="/logIn">Log in</a>
+        <div className='alt-su'>
+          <p className='text2-su'>Already have an account?</p>
+          <a className='textLog-su' href="/logIn">Log in</a>
         </div>
       </IonContent>
     </IonPage>
