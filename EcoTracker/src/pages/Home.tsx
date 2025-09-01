@@ -313,7 +313,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Styrofoam']
                       : prev.filter(m => m !== 'Styrofoam')
                   );
-                }}> TetraPak </IonCheckbox>
+                }}> Styrofoam </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox' checked={materialesSeleccionados.includes('Oil')}
                 onIonChange={e => {
                   const checked = e.detail.checked;

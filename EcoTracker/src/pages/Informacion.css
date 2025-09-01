@@ -67,11 +67,11 @@
 }
 
 .temas {
+    left: 3vh;
     color: #0A3A4F;
     position: absolute;
-    left: 2vh;
     font-family: 'Montserrat', sans-serif;
-    font-size: 3vh;
+    font-size: 2vh;
     font-weight: bold;
 }
 
