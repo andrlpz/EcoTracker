@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAmiFJ7hv9b6qwGL8ajWDcPA8DKnXhqpfU",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "ecotracker-9f467.firebaseapp.com",
   projectId: "ecotracker-9f467",
   storageBucket: "ecotracker-9f467.firebasestorage.app",
