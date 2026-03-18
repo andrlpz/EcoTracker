@@ -35,8 +35,6 @@ function SignUp() {
        nombre: nombre
      });
 
-     alert("Usuario guardado con éxito");
-
      //limpiamos los inputs
      setUsuario("");
      setContrasena("");

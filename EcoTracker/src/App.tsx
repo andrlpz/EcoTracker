@@ -9,7 +9,6 @@ import SignUp from './pages/SignUp';
 import Tabs from './pages/Tabs';
 import Cuenta from './pages/Cuenta';
 import Informacion from './pages/Informacion';
-
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -59,9 +58,7 @@ const App: React.FC = () => (
         <Route exact path="/">
           <Redirect to="/logIn" />
         </Route>
-        <Route exact path="/Informacion">
-          <Informacion />
-        </Route>
+        
       </IonRouterOutlet>
     </IonReactRouter>
   </IonApp>

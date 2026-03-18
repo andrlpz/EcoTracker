@@ -11,7 +11,11 @@ import Elemento1 from './Elemento1';
 import Elemento2 from './Elemento2';
 import Elemento3 from './Elemento3';
 import IA from './IA';
+import Games from './Games';
+import Memorama from './Memorama';
 import './Tabs.css';
+import Preguntas from './Preguntas';
+import Conectar from './Conectar';
 
 const Tabs: React.FC = () => (
   <IonTabs>
@@ -27,6 +31,10 @@ const Tabs: React.FC = () => (
       <Route exact path="/tabs/elemento/1" component={Elemento1} />
       <Route exact path="/tabs/elemento/2" component={Elemento2} />
       <Route exact path="/tabs/elemento/3" component={Elemento3} />
+      <Route exact path="/tabs/games" component={Games} />
+      <Route exact path="/tabs/memorama" component={Memorama} />
+      <Route exact path="/tabs/preguntas" component={Preguntas} />
+      <Route exact path="/tabs/conectar" component={Conectar} />
 
       <Redirect exact from="/tabs" to="/tabs/mapa" />
     </IonRouterOutlet>
@@ -46,6 +54,10 @@ const Tabs: React.FC = () => (
         </svg>
 
         <IonLabel>IA</IonLabel>
+      </IonTabButton>
+      <IonTabButton tab="games" href="/tabs/games">
+        <IonIcon icon={personCircleOutline} />
+        <IonLabel>Games</IonLabel>
       </IonTabButton>
       <IonTabButton tab="cuenta" href="/tabs/cuenta">
         <IonIcon icon={personCircleOutline} />
