@@ -25,7 +25,6 @@ const LogIn: React.FC = () => {
   const handleLogin = async () =>{
         try{
             await loginUsuario(auth, usuario, contrasena);
-            alert("Bienvenido de nuevo");
             irAMapa();
         }catch(error: any){
             if(error.code === 'auth/user-notfound' || error.code === 'auth/wrong/-password'){

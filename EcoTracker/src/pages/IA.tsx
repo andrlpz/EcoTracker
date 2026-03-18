@@ -76,11 +76,14 @@ function IA() {
   return (
     <IonPage>
       <IonContent className='fondo'>
-        <h1 className='tituloIA'>Descubre qué tipo de clasificación es el objeto e ideas para reusarlo</h1>
+      <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"></link>
+        <div className='fondo'> 
+        <div className='contenedor'>
+        <h1 className='tituloIA'>Descubre qué tipo de clasificación es el objeto e ideas para reusarlo </h1>
         <button onClick={seleccionarImagen} disabled={loading} className='btnIA'>
           {loading ? 'Analizando...' : 'Subir y Describir Imagen'}
         </button>
-        <img src={imagen} alt="tu imagen" className='fotoIA' />
+        <img src={imagen} className='fotoIA' />
         <div className='respuestaIA'>
           <p className='tipoIA'>tipo: {respuesta.tipo}</p>
           <div className='ideasIA'>
@@ -93,6 +96,8 @@ function IA() {
             ))}
           </ul>
           </div>
+        </div>
+        </div>
         </div>
       </IonContent>
     </IonPage>
