@@ -192,3 +192,149 @@
     width: 100%;
     display: inline-block;
 }
+.agregar-sitio {
+    position: fixed;
+    left: 25px;
+    bottom: 25px;
+    background-color: #0e3b6e;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 11000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.form-button-submit {
+    background-color: #0e3b6e;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    position: relative;
+    width: 60%;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    left: 20%;
+}
+
+.form-close-button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    width: 3%;
+}
+
+.check-days {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+    font-size: 10px;
+    padding-right: 5px;
+    padding-left: 65px;
+}
+
+.form-check {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+svg.checkbox-icon {
+    appearance: none !important;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #141270 !important;
+    --background: #ffffff !important;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+}
+
+input.form-check[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #579176;
+    background: #ffffff;
+    border-radius: 4px;
+    position: relative;
+    cursor: pointer;
+}
+
+input.form-check[type="checkbox"]::after {
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 10px;
+    left: 4px;
+    border: solid #000;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+    opacity: 0;
+}
+
+
+input.form-check[type="checkbox"]:checked::after {
+    opacity: 1;
+    border-color: #000;
+}
+
+.form-agregar-sitio {
+    position: fixed;
+    z-index: 12000;
+    left: 25px;
+    display: flex;
+    background-color: white;
+    color: black;
+    font-size: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    top: 55%;
+    height: 35%;
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    max-width: 300px;
+    overflow-y: auto;
+}
+
+.form-input {
+    width: 60%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color: #d1e9d4;
+    border: none;
+    color: black;
+    height: 30px;
+}
+
+.div-form-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-logo {
+    width: 10%;
+    max-width: 20px;
+}
+
+.form-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

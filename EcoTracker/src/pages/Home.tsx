@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { IonList, IonSelect, IonSelectOption } from '@ionic/react';
 import { useEffect, useState, useRef } from 'react';
+import { registrarSitio } from "../services/firebaseFunctions.js";
 import { obtenerSitios, agregarSitio, obtenerFavoritos, quitarSitio } from "../services/firebaseFunctions";
 
 //remplazarlo por el icono del marker que quieras usar
@@ -66,11 +67,49 @@ const Home: React.FC = () => {
   const [userPosition, setUserPosition] = useState<[number, number] | null>(null);
   const [showSidebar, setShowSidebar] = useState(true);
   const [showFilters, setShowFilters] = useState(false);
+  const [showAddSite, setShowAddSite] = useState(false);
   const [materialesSeleccionados, setMaterialesSeleccionados] = useState<string[]>([]);
   const usuarioId = localStorage.getItem('usuarioId');
   const [visibleMarkers, setVisibleMarkers] = useState<any[]>([]);
   const markerRefs = useRef<{ [key: string]: L.Marker | null }>({});
   const [favoritesSet, setFavoritesSet] = useState<Set<string>>(new Set());
+  const [newName, setNewName] = useState('');
+  const [newAddress, setNewAddress] = useState('');
+  const [newLat, setNewLat] = useState<number | null>(null);
+  const [newLon, setNewLon] = useState<number | null>(null);
+  const [newBussinessHours, setNewBussinessHours] = useState('');
+  const [newMaterials, setNewMaterials] = useState('');
+  const [newInstructions, setNewInstructions] = useState('');
+  const [newFacilities, setNewFacilities] = useState('');
+  const [newContact, setNewContact] = useState('');
+  const [newMonday, setNewMonday] = useState(false);
+  const [newTuesday, setNewTuesday] = useState(false);
+  const [newWednesday, setNewWednesday] = useState(false);
+  const [newThursday, setNewThursday] = useState(false);
+  const [newFriday, setNewFriday] = useState(false);
+  const [newSaturday, setNewSaturday] = useState(false);
+  const [newSunday, setNewSunday] = useState(false);
+
+
+  const [registro, setRegistro] = useState({
+    name: "",
+    address: "",
+    lat: "",
+    lon: "",
+    bussinessHours: "",
+    materials: [],
+    monday: false,
+    tuesday: false,
+    wednesday: false,
+    thursday: false,
+    friday: false,
+    saturday: false,
+    sunday: false,
+    instructions: "",
+    facilities: "",
+    contact: "",
+  });
+  const [error, setError] = useState(false);
 
   function FixMapResize() {
     const map = useMap();
@@ -142,6 +181,60 @@ const Home: React.FC = () => {
       console.error("Error actualizando favoritos:", error);
       wasFavorite ? newSet.add(marker.id) : newSet.delete(marker.id);
       setFavoritesSet(newSet);
+    }
+  };
+
+  const registroSitio = async () => {
+    if (!newName || !newAddress || newLat === null || newLon === null) {
+      alert('Por favor completa: Nombre, Dirección, Latitud y Longitud');
+      return;
+    }
+
+    const nuevoRegistro = {
+      name: newName,
+      address: newAddress,
+      lat: parseFloat(newLat as any),
+      lon: parseFloat(newLon as any),
+      bussinessHours: newBussinessHours,
+      materials: newMaterials.split(',').map(mat => mat.trim()).filter(m => m),
+      monday: newMonday,
+      tuesday: newTuesday,
+      wednesday: newWednesday,
+      thursday: newThursday,
+      friday: newFriday,
+      saturday: newSaturday,
+      sunday: newSunday,
+      instructions: newInstructions,
+      facilities: newFacilities,
+      contact: newContact,
+      photo: '/assets/logoDraw.png'
+    };
+
+    try {
+      await registrarSitio(nuevoRegistro);
+
+      const datosMarkers = await obtenerSitios();
+      setMarkers(datosMarkers);
+
+      setNewName('');
+      setNewAddress('');
+      setNewLat(null);
+      setNewLon(null);
+      setNewBussinessHours('');
+      setNewMaterials('');
+      setNewInstructions('');
+      setNewFacilities('');
+      setNewContact('');
+      setNewMonday(false);
+      setNewTuesday(false);
+      setNewWednesday(false);
+      setNewThursday(false);
+      setNewFriday(false);
+      setNewSaturday(false);
+      setNewSunday(false);
+      setShowAddSite(false);
+    } catch (error) {
+      console.error('Error al registrar sitio:', error);
     }
   };
 
@@ -246,6 +339,124 @@ const Home: React.FC = () => {
             <UpdateVisibleMarkers markers={markers} setVisibleMarkers={setVisibleMarkers} />
           </MapContainer>
         </div>
+        <button className='agregar-sitio' onClick={() => setShowAddSite(true)}>Agregar sitio</button>
+        {showAddSite && (
+          <div className='form-agregar-sitio'>
+            <div className='form-header'>
+              <img src="../../assets/logoDraw.png" alt="Logo" className='form-logo' />
+              <button className='form-close-button' onClick={() => setShowAddSite(false)}>
+                <img src="../../assets/Cross.png" alt="Close" />
+              </button>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Name Site:</p><input type='text' placeholder='Name site...' className='form-input' onChange={(e: any) => setNewName(e.target.value)}></input>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Address:</p><input type='text' placeholder='Address...' className='form-input' onChange={(e: any) => setNewAddress(e.target.value)}></input>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Latitude:</p><input type='text' placeholder='Latitude...' className='form-input' onChange={(e: any) => setNewLat(e.target.value)}></input>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Longitude:</p><input type='text' placeholder='Longitude...' className='form-input' onChange={(e: any) => setNewLon(e.target.value)}></input>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Bussiness Hours:</p><input type='text' placeholder='Bussiness Hours...' className='form-input' onChange={(e: any) => setNewBussinessHours(e.target.value)}></input>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-days'>Days open:</p>
+              <div className='check-days'>
+                <input
+                  type="checkbox"
+                  id="sunday"
+                  name="sunday"
+                  className='form-check'
+                  checked={newSunday}
+                  onChange={(e) => setNewSunday(e.target.checked)}
+                />
+                <label htmlFor="sunday">S</label>
+
+                <input
+                  type="checkbox"
+                  id="monday"
+                  name="monday"
+                  className='form-check'
+                  checked={newMonday}
+                  onChange={(e) => setNewMonday(e.target.checked)}
+                />
+                <label htmlFor="monday">M</label>
+
+                <input
+                  type="checkbox"
+                  id="tuesday"
+                  name="tuesday"
+                  className='form-check'
+                  checked={newTuesday}
+                  onChange={(e) => setNewTuesday(e.target.checked)}
+                />
+                <label htmlFor="tuesday">T</label>
+
+                <input
+                  type="checkbox"
+                  id="wednesday"
+                  name="wednesday"
+                  className='form-check'
+                  checked={newWednesday}
+                  onChange={(e) => setNewWednesday(e.target.checked)}
+                />
+                <label htmlFor="wednesday">W</label>
+
+                <input
+                  type="checkbox"
+                  id="thursday"
+                  name="thursday"
+                  className='form-check'
+                  checked={newThursday}
+                  onChange={(e) => setNewThursday(e.target.checked)}
+                />
+                <label htmlFor="thursday">T</label>
+
+                <input
+                  type="checkbox"
+                  id="friday"
+                  name="friday"
+                  className='form-check'
+                  checked={newFriday}
+                  onChange={(e) => setNewFriday(e.target.checked)}
+                />
+                <label htmlFor="friday">F</label>
+
+                <input
+                  type="checkbox"
+                  id="saturday"
+                  name="saturday"
+                  className='form-check'
+                  checked={newSaturday}
+                  onChange={(e) => setNewSaturday(e.target.checked)}
+                />
+                <label htmlFor="saturday">S</label>
+              </div>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Materials:</p><input type='text' placeholder='Materials...' className='form-input' onChange={(e: any) => setNewMaterials(e.target.value)} ></input>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Instructions:</p><input type='text' placeholder='Instructions...' className='form-input' onChange={(e: any) => setNewInstructions(e.target.value)}></input>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Facilities:</p><input type='text' placeholder='Facilities...' className='form-input' onChange={(e: any) => setNewFacilities(e.target.value)} ></input>
+            </div>
+            <div className='div-form-input'>
+              <p className='form-name'>Contact:</p><input type='text' placeholder='Contact...' className='form-input' onChange={(e: any) => setNewContact(e.target.value)}></input>
+            </div>
+            <button
+              className='form-button-submit'
+              onClick={registroSitio}
+            >
+              Agregar
+            </button>
+          </div>
+          )}
         <div className={`panel${showSidebar ? '' : ' hidden'}`}>
           <div className='filter-div'>
             <p className='filters'>Filters</p>
