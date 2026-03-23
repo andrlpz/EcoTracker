@@ -8,6 +8,8 @@ import { IonList, IonSelect, IonSelectOption } from '@ionic/react';
 import { useEffect, useState, useRef } from 'react';
 import { registrarSitio } from "../services/firebaseFunctions.js";
 import { obtenerSitios, agregarSitio, obtenerFavoritos, quitarSitio } from "../services/firebaseFunctions";
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useHistory } from 'react-router-dom';
 
 //remplazarlo por el icono del marker que quieras usar
 import customMarkerIcon from '../img/point.png';
@@ -69,7 +71,7 @@ const Home: React.FC = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [showAddSite, setShowAddSite] = useState(false);
   const [materialesSeleccionados, setMaterialesSeleccionados] = useState<string[]>([]);
-  const usuarioId = localStorage.getItem('usuarioId');
+  const [usuarioId, setUsuarioId] = useState<string | null>(null);
   const [visibleMarkers, setVisibleMarkers] = useState<any[]>([]);
   const markerRefs = useRef<{ [key: string]: L.Marker | null }>({});
   const [favoritesSet, setFavoritesSet] = useState<Set<string>>(new Set());
@@ -110,6 +112,27 @@ const Home: React.FC = () => {
     contact: "",
   });
   const [error, setError] = useState(false);
+  const [markers, setMarkers] = useState<any[]>([]);
+  
+  const auth = getAuth();
+  const history = useHistory();
+
+  // Verificar autenticación al montar el componente
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Usuario autenticado
+        console.log("Usuario autenticado en Home:", user.email);
+        setUsuarioId(user.uid);
+      } else {
+        // No hay usuario autenticado, redirigir al login
+        console.log("No hay usuario autenticado, redirigiendo...");
+        history.push('/login');
+      }
+    });
+
+    return () => unsubscribe();
+  }, [auth, history]);
 
   function FixMapResize() {
     const map = useMap();
@@ -133,7 +156,6 @@ const Home: React.FC = () => {
     return null;
   }
 
-  const [markers, setMarkers] = useState<any[]>([]);
   useIonViewWillEnter(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -167,12 +189,31 @@ const Home: React.FC = () => {
     loadFavorites();
   });
 
+  // Recargar favoritos cuando cambie el usuarioId
+  useEffect(() => {
+    const loadFavorites = async () => {
+      if (!usuarioId) return;
+      try {
+        const favs = await obtenerFavoritos(usuarioId);
+        setFavoritesSet(new Set(favs));
+      } catch (error) {
+        console.error("Error cargando favoritos:", error);
+      }
+    };
+    loadFavorites();
+  }, [usuarioId]);
+
   const toggleFavorite = async (marker: any) => {
-    if (!usuarioId) return;
+    if (!usuarioId) {
+      console.log("No hay usuario autenticado");
+      return;
+    }
+    
     const newSet = new Set(favoritesSet);
     const wasFavorite = newSet.has(marker.id);
     wasFavorite ? newSet.delete(marker.id) : newSet.add(marker.id);
     setFavoritesSet(newSet);
+    
     try {
       wasFavorite
         ? await quitarSitio(usuarioId, marker)
