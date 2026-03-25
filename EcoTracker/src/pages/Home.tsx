@@ -10,6 +10,9 @@ import { registrarSitio } from "../services/firebaseFunctions.js";
 import { obtenerSitios, agregarSitio, obtenerFavoritos, quitarSitio } from "../services/firebaseFunctions";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useHistory } from 'react-router-dom';
+import cookies from 'js-cookie'
+import { useTranslation } from 'react-i18next';
+  
 
 //remplazarlo por el icono del marker que quieras usar
 import customMarkerIcon from '../img/point.png';
@@ -113,9 +116,11 @@ const Home: React.FC = () => {
   });
   const [error, setError] = useState(false);
   const [markers, setMarkers] = useState<any[]>([]);
+  const [currentLanguageCode, setCurrentLanguageCode] = useState('es');
   
   const auth = getAuth();
   const history = useHistory();
+  const { i18n } = useTranslation();
 
   // Verificar autenticación al montar el componente
   useEffect(() => {
@@ -156,7 +161,13 @@ const Home: React.FC = () => {
     return null;
   }
 
-  useIonViewWillEnter(() => {
+  useIonViewWillEnter(async () => {
+    const savedLanguage = cookies.get('i18next') || 'es';
+    setCurrentLanguageCode(savedLanguage);
+    if (i18n.language !== savedLanguage) {
+      await i18n.changeLanguage(savedLanguage);
+    }
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -278,6 +289,7 @@ const Home: React.FC = () => {
       console.error('Error al registrar sitio:', error);
     }
   };
+  const { t } = useTranslation()
 
   return (
     <IonPage>
@@ -341,10 +353,10 @@ const Home: React.FC = () => {
                       </div>
                       <img src={marker.photo || '/assets/logo.png'} />
                       <p>
-                        <strong>Address: </strong>{marker.address || 'No address available.'}
+                        <strong>{t('address')}: </strong>{marker.address || 'No address available.'}
                       </p>
                       <p>
-                        <strong>Bussiness Hours: </strong>{marker.bussinessHours || 'No bussiness hours available.'}
+                        <strong>{t('bussiness_hours')}: </strong>{marker.bussinessHours || 'No bussiness hours available.'}
                       </p>
                       <div className='div-days'>
                         {marker.sunday ? (<img src="../../assets/sundayopen.png" className='day-open' />) : (<img src="../../assets/sunday.png" className='day-icon' />)}
@@ -356,16 +368,16 @@ const Home: React.FC = () => {
                         {marker.saturday ? (<img src="../../assets/saturdayopen.png" className='day-open' />) : (<img src="../../assets/saturday.png" className='day-icon' />)}
                       </div>
                       <p>
-                        <strong>Materials: </strong>{marker.materials && marker.materials.join(', ')}.
+                        <strong>{t('materials')}: </strong>{marker.materials && marker.materials.join(', ')}.
                       </p>
                       <p>
-                        <strong>Instructions: </strong>{marker.instructions || 'No specific instructions available.'}
+                        <strong>{t('instructions')}: </strong>{marker.instructions || 'No specific instructions available.'}
                       </p>
                       <p>
-                        <strong> Facilities: </strong>{marker.facilities || 'No information available.'}
+                        <strong>{t('facilities')}: </strong>{marker.facilities || 'No information available.'}
                       </p>
                       <p>
-                        <strong>Contact: </strong>{marker.contact || 'No contact available.'}
+                        <strong>{t('contact')}: </strong>{marker.contact || 'No contact available.'}
                       </p>
                     </div>
                   </Popup>
@@ -373,14 +385,14 @@ const Home: React.FC = () => {
               ))}
             {userPosition && (
               <Marker position={userPosition} icon={currentIcon}>
-                <Popup><div className='popup-youre-here'>You're here</div></Popup>
+                <Popup><div className='popup-youre-here'>{t('youre_here')}</div></Popup>
               </Marker>
             )}
             {userPosition && <SetViewOnUser position={userPosition} />}
             <UpdateVisibleMarkers markers={markers} setVisibleMarkers={setVisibleMarkers} />
           </MapContainer>
         </div>
-        <button className='agregar-sitio' onClick={() => setShowAddSite(true)}>Agregar sitio</button>
+        <button className='agregar-sitio' onClick={() => setShowAddSite(true)}>{t('add_site')}</button>
         {showAddSite && (
           <div className='form-agregar-sitio'>
             <div className='form-header'>
@@ -500,7 +512,7 @@ const Home: React.FC = () => {
           )}
         <div className={`panel${showSidebar ? '' : ' hidden'}`}>
           <div className='filter-div'>
-            <p className='filters'>Filters</p>
+            <p className='filters'>{t('filters')}</p>
             <button className='filter-button'
               onClick={() => setShowFilters((v) => !v)}
               style={{
@@ -524,7 +536,7 @@ const Home: React.FC = () => {
                   );
                 }}
               >
-                Paper
+                {t('paper')}
               </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
                 checked={materialesSeleccionados.includes('Plastic')}
@@ -535,7 +547,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Plastic']
                       : prev.filter(m => m !== 'Plastic')
                   );
-                }}> Plastic </IonCheckbox>
+                }}> {t('plastic')} </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
                 checked={materialesSeleccionados.includes('Cardboard')}
                 onIonChange={e => {
@@ -545,7 +557,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Cardboard']
                       : prev.filter(m => m !== 'Cardboard')
                   );
-                }}> Cardboard </IonCheckbox>
+                }}> {t('cardboard')} </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
                 checked={materialesSeleccionados.includes('TetraPak')}
                 onIonChange={e => {
@@ -555,7 +567,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'TetraPak']
                       : prev.filter(m => m !== 'TetraPak')
                   );
-                }}> TetraPak </IonCheckbox>
+                }}> {t('tetrapak')} </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
                 checked={materialesSeleccionados.includes('Styrofoam')}
                 onIonChange={e => {
@@ -565,7 +577,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Styrofoam']
                       : prev.filter(m => m !== 'Styrofoam')
                   );
-                }}> Styrofoam </IonCheckbox>
+                }}> {t('styfoam')} </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox' checked={materialesSeleccionados.includes('Oil')}
                 onIonChange={e => {
                   const checked = e.detail.checked;
@@ -574,7 +586,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Oil']
                       : prev.filter(m => m !== 'Oil')
                   );
-                }}> Oil </IonCheckbox>
+                }}> {t('oil')} </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
                 checked={materialesSeleccionados.includes('Metal')}
                 onIonChange={e => {
@@ -584,7 +596,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Metal']
                       : prev.filter(m => m !== 'Metal')
                   );
-                }}> Metal </IonCheckbox>
+                }}> {t('metal')} </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
                 checked={materialesSeleccionados.includes('Glass')}
                 onIonChange={e => {
@@ -594,7 +606,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Glass']
                       : prev.filter(m => m !== 'Glass')
                   );
-                }}> Glass </IonCheckbox>
+                }}> {t('glass')} </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
                 checked={materialesSeleccionados.includes('Electronics')}
                 onIonChange={e => {
@@ -604,7 +616,7 @@ const Home: React.FC = () => {
                       ? [...prev, 'Electronics']
                       : prev.filter(m => m !== 'Electronics')
                   );
-                }}> Electronics </IonCheckbox>
+                }}> {t('electronics')} </IonCheckbox>
               <IonCheckbox labelPlacement='end' className='checkbox'
                 checked={materialesSeleccionados.includes('Batteries')}
                 onIonChange={e => {
@@ -614,10 +626,10 @@ const Home: React.FC = () => {
                       ? [...prev, 'Batteries']
                       : prev.filter(m => m !== 'Batteries')
                   );
-                }}> Batteries </IonCheckbox>
+                }}> {t('batteries')} </IonCheckbox>
             </div>
           )}
-          <p className='visible-sites'>Visible Recycling Facilities</p>
+          <p className='visible-sites'>{t('visible_recycling_facilities')}</p>
           <div className='scrollable-content'>
             <ul className='ul-visible-sites'>
               {visibleMarkers

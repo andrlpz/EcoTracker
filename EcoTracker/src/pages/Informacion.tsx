@@ -2,34 +2,36 @@ import React from 'react';
 import { IonContent, useIonRouter, IonPage, IonCard, IonCardContent, IonIcon } from '@ionic/react';
 import { playCircle } from 'ionicons/icons';
 import './Informacion.css';
-
-const temas = [
-  {
-    titulo: 'IMPORTANCE OF RECYCLING',
-    descripcion: 'In this lesson you will learn about why and what to recycle',
-    imagen: 'assets/recycling1.png',
-  },
-  {
-    titulo: 'RECYCLING BINS',
-    descripcion: 'In this lesson you will learn about the function of each type of bin',
-    imagen: 'assets/recycling2.png',
-  },
-  {
-    titulo: 'RECYCLING SYMBOLS',
-    descripcion: 'In this lesson you will learn about the most common and important recycling symbols',
-    imagen: 'assets/recycling3.png',
-  },
-];
+import { useTranslation } from 'react-i18next';
 
 const Informacion: React.FC = () => {
   const router = useIonRouter();
+  const { t } = useTranslation();
+
+  const temas = [
+    {
+      titulo: t('importance_of_recycling'),
+      descripcion: t('in_this_lesson1'),
+      imagen: 'assets/recycling1.png',
+    },
+    {
+      titulo: t('recycling_bins'),
+      descripcion: t('in_this_lesson2'),
+      imagen: 'assets/recycling2.png',
+    },
+    {
+      titulo: t('plastic_symbols'),
+      descripcion: t('in_this_lesson3'),
+      imagen: 'assets/recycling3.png',
+    },
+  ];
 
   return (
     <IonPage>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"></link>
       <IonContent className="ion-padding" style={{ '--ion-background-color': '#F0F0E9' }}>
         <div className='learn'>
-          <p className='temas'> LEARN TO RECYCLE
+          <p className='temas'> {t('learn_to_recycle')}
           </p>
           <img src="../../assets/logoDraw.png" className='logoTemas' />
         </div>

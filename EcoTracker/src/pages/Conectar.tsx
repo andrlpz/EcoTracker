@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { IonPage, IonContent, IonHeader, IonImg } from '@ionic/react';
 import './Conectar.css';
+import { useTranslation } from 'react-i18next';
 
 const Conectar: React.FC = () => {
+  const { t } = useTranslation();
   const [matchedCount, setMatchedCount] = useState(0);
   const [draggedItem, setDraggedItem] = useState<number | null>(null);
   const [matchedIds, setMatchedIds] = useState<number[]>([]);
@@ -11,23 +13,23 @@ const Conectar: React.FC = () => {
   const [rightItems, setRightItems] = useState<any[]>([]);
 
   const plasticTypes = [
-    { id: 1, name: 'PETE or PET', img: '../../assets/pet.avif' },
-    { id: 2, name: 'HDPE or PE-HD', img: '../../assets/hdpe.avif' },
-    { id: 3, name: 'PVC or V', img: '../../assets/pvc.avif' },
-    { id: 4, name: 'LDPE or PE-LD', img: '../../assets/ldpe.avif' },
+    { id: 1, name: t('pete_or_pet'), img: '../../assets/pet.avif' },
+    { id: 2, name: t('hdpe_or_pehd'), img: '../../assets/hdpe.avif' },
+    { id: 3, name: t('pvc_or_v'), img: '../../assets/pvc.avif' },
+    { id: 4, name: t('ldpe_or_peld'), img: '../../assets/ldpe.avif' },
     { id: 5, name: 'PP', img: '../../assets/pp.avif' },
     { id: 6, name: 'PS', img: '../../assets/ps.avif' },
-    { id: 7, name: 'OTHER or O', img: '../../assets/other.avif' },
+    { id: 7, name: t('other_or_o'), img: '../../assets/other.avif' },
   ];
 
   const descriptions = [
-    { id: 1, description: 'Used for packaging bottles, food containers and textiles. Widely recyclable.' },
-    { id: 2, description: 'Found in detergent bottles, toys and piping. Strong and widely recyclable.' },
-    { id: 3, description: 'Used in plumbing, flooring and vinyl records. Rarely recycled.' },
-    { id: 4, description: 'Flexible plastic used in bags, wraps and squeezable bottles. Sometimes collected at stores.' },
-    { id: 5, description: 'Used in food containers, caps and packaging. Durable and heat-resistant.' },
-    { id: 6, description: 'Found in disposable plates, cups and foam trays. Rarely recycled.' },
-    { id: 7, description: 'Miscellaneous plastics (acrylic, polycarbonate, multilayers). Difficult to recycle.' },
+    { id: 1, description: t('used_for_packaging') },
+    { id: 2, description: t('found_in_detergent') },
+    { id: 3, description: t('used_in_plumbing') },
+    { id: 4, description: t('flexible_plastic_used') },
+    { id: 5, description: t('used_in_food') },
+    { id: 6, description: t('found_in_disposable') },
+    { id: 7, description: t('micellaneous_plastics') },
   ];
 
   useEffect(() => {
@@ -76,17 +78,17 @@ const Conectar: React.FC = () => {
   return (
     <IonContent className="conectar-container" style={{ '--background': '#f0f0e8' } as any}>
   <div className="conectar-wrap">
-    <h1>Match each plastic symbol</h1>
+    <h1>{t('connect')}</h1>
 
     <div style={{ padding: '0 20px 12px 20px', textAlign: 'center' }}>
       <p style={{ margin: 0, color: '#333135', fontSize: 14 }}>
-        Click an image of a plastic type and drag it onto the correct description.
+        {t('connect_text')}
       </p>
     </div>
 
     <div className="conectar-controls">
-      <div id="status">Matched: <span id="matched">{matchedCount}</span>/<span id="total">{plasticTypes.length}</span></div>
-      <button id="reset" onClick={handleReset} className="conectar-btn-reset">Reset</button>
+      <div id="status">{t('matched')}: <span id="matched">{matchedCount}</span>/<span id="total">{plasticTypes.length}</span></div>
+      <button id="reset" onClick={handleReset} className="conectar-btn-reset">{t('reset')}</button>
     </div>
 
     <main className="conectar-game">
@@ -142,9 +144,9 @@ const Conectar: React.FC = () => {
   {gameWon && (
     <div className="conectar-overlay">
       <div className="conectar-modal">
-        <h2>Well done!</h2>
-        <p>You matched all plastic types correctly.</p>
-        <button onClick={handleReset} className="conectar-btn-reset">Play again</button>
+        <h2>{t('well_done')}</h2>
+        <p>{t('you_matched')}</p>
+        <button onClick={handleReset} className="conectar-btn-reset">{t('play_again')}</button>
       </div>
     </div>
   )}

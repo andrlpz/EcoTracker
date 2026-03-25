@@ -38,30 +38,33 @@ import '@ionic/react/css/palettes/dark.system.css';
 
 /* Theme variables */
 import './theme/variables.css';
+import { Suspense } from 'react';
 
 setupIonicReact();
 
 const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/inicio">
-          <Inicio />
-        </Route>
-        <Route exact path="/logIn">
-          <LogIn />
-        </Route>
-        <Route exact path="/SignUp">
-          <SignUp />
-        </Route>
-        <Route path="/tabs" component={Tabs} />
-        <Route exact path="/">
-          <Redirect to="/logIn" />
-        </Route>
-        
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
+  <Suspense fallback={<div>Cargando...</div>}>
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route exact path="/inicio">
+            <Inicio />
+          </Route>
+          <Route exact path="/logIn">
+            <LogIn />
+          </Route>
+          <Route exact path="/SignUp">
+            <SignUp />
+          </Route>
+          <Route path="/tabs" component={Tabs} />
+          <Route exact path="/">
+            <Redirect to="/logIn" />
+          </Route>
+
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  </Suspense>
 );
 
 export default App;

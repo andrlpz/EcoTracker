@@ -1,8 +1,10 @@
 import { IonPage, IonContent, IonHeader, IonToolbar, IonButtons, IonBackButton } from '@ionic/react';
 import { useEffect, useState } from 'react';
 import './Memorama.css';
+import { useTranslation } from 'react-i18next';
 
 const Memorama: React.FC = () => {
+  const { t } = useTranslation();
   const [cards, setCards] = useState<any[]>([]);
   const [flipped, setFlipped] = useState<number[]>([]);
   const [matched, setMatched] = useState<number[]>([]);
@@ -15,23 +17,23 @@ const Memorama: React.FC = () => {
 
   const initializeGame = () => {
     const cardPairs = [
-      { id: 1, emoji: '🍌', label: 'Banana peel', type: 'material', color: '' },
-      { id: 1, emoji: '🌱', label: 'Organic', type: 'category', color: '#4CAF50' },
+      { id: 1, emoji: '🍌', label: t('banana_peel'), type: 'material', color: '' },
+      { id: 1, emoji: '🌱', label: t('organic'), type: 'category', color: '#4CAF50' },
 
-      { id: 2, emoji: '🍾', label: 'Plastic bottle', type: 'material', color: '' },
-      { id: 2, emoji: '♻️', label: 'Recyclable', type: 'category', color: '#2196F3' },
+      { id: 2, emoji: '🍾', label: t('plastic_bottle'), type: 'material', color: '' },
+      { id: 2, emoji: '♻️', label: t('recyclable'), type: 'category', color: '#2196F3' },
 
-      { id: 3, emoji: '🔋', label: 'Batteries', type: 'material', color: '' },
-      { id: 3, emoji: '⚠️', label: 'Hazardous', type: 'category', color: '#F44336' },
+      { id: 3, emoji: '🔋', label: t('batteries'), type: 'material', color: '' },
+      { id: 3, emoji: '⚠️', label: t('hazardous'), type: 'category', color: '#F44336' },
 
-      { id: 4, emoji: '📰', label: 'Newspaper', type: 'material', color: '' },
-      { id: 4, emoji: '📦', label: 'Paper / Cardboard', type: 'category', color: '#8B4513' },
+      { id: 4, emoji: '📰', label: t('newspaper'), type: 'material', color: '' },
+      { id: 4, emoji: '📦', label: t('paper_and_cardboard'), type: 'category', color: '#8B4513' },
 
-      { id: 5, emoji: '🥫', label: 'Can', type: 'material', color: '' },
-      { id: 5, emoji: '🔗', label: 'Metal', type: 'category', color: '#9E9E9E' },
+      { id: 5, emoji: '🥫', label: t('can'), type: 'material', color: '' },
+      { id: 5, emoji: '🔗', label: t('metal'), type: 'category', color: '#9E9E9E' },
 
-      { id: 6, emoji: '🍺', label: 'Glass bottle', type: 'material', color: '' },
-      { id: 6, emoji: '🟦', label: 'Glass', type: 'category', color: '#00BCD4' },
+      { id: 6, emoji: '🍺', label: t('glass_bottle'), type: 'material', color: '' },
+      { id: 6, emoji: '🟦', label: t('glass'), type: 'category', color: '#00BCD4' },
     ];
 
     const shuffled = cardPairs.sort(() => Math.random() - 0.5);
@@ -69,17 +71,17 @@ const Memorama: React.FC = () => {
   return (
     <IonContent style={{ '--background': '#f0f0e8' } as any} className="memorama-container">
   <div className="memorama-container">
-    <h1>Recycling Memory Game</h1>
+    <h1>{t('memory')}</h1>
 
     <div style={{ padding: '0 20px 12px 20px', textAlign: 'center' }}>
       <p style={{ margin: 0, color: '#36353a', fontSize: 14 }}>
-        Match each material with its recycling category.
+        {t('memory_text')}
       </p>
     </div>
 
     <div className="memorama-controls">
-      <span id="tries">Tries: <strong>{tries}</strong></span>
-      <button onClick={initializeGame} className="memorama-btn-reset">Reset</button>
+      <span id="tries">{t('tries')}: <strong>{tries}</strong></span>
+      <button onClick={initializeGame} className="memorama-btn-reset">{t('reset')}</button>
     </div>
 
     <div className="memorama-game" id="memorama-game">
@@ -112,9 +114,9 @@ const Memorama: React.FC = () => {
   {gameWon && (
     <div className="memorama-overlay" id="memorama-win">
       <div className="memorama-popup">
-        <h2>Congratulations!</h2>
-        <p>You completed the game in <strong>{tries}</strong> tries.</p>
-        <button onClick={initializeGame} className="memorama-btn-reset">Play again</button>
+        <h2>{t('well_done')}</h2>
+        <p>{t('you_completed')} <strong>{tries}</strong> {t('tries_juego')}.</p>
+        <button onClick={initializeGame} className="memorama-btn-reset">{t('play_again')}</button>
       </div>
     </div>
   )}

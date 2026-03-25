@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { IonPage, IonContent, IonHeader } from '@ionic/react';
+import { IonPage, IonContent } from '@ionic/react';
 import './Preguntas.css';
+import { useTranslation } from 'react-i18next';
 
 const shuffleArray = <T,>(array: T[]): T[] => {
   const shuffled = [...array];
@@ -11,28 +12,30 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
+// Stores translation keys instead of translated strings
+// so language changes work correctly without restarting the game
 interface ShuffledQuestion {
-  question: string;
-  options: string[];
+  questionKey: string;
+  optionKeys: string[];
   correct: number;
 }
 
 const shuffleQuestions = (questions: ShuffledQuestion[]): ShuffledQuestion[] => {
   const shuffledQuestions = shuffleArray(questions);
-  
+
   return shuffledQuestions.map(q => {
-    const optionsWithIndex = q.options.map((opt, idx) => ({
-      text: opt,
-      wasCorrect: idx === q.correct
+    const optionsWithIndex = q.optionKeys.map((key, idx) => ({
+      key,
+      wasCorrect: idx === q.correct,
     }));
-    
+
     const shuffledOptions = shuffleArray(optionsWithIndex);
     const newCorrectIndex = shuffledOptions.findIndex(opt => opt.wasCorrect);
-    
+
     return {
-      question: q.question,
-      options: shuffledOptions.map(opt => opt.text),
-      correct: newCorrectIndex
+      questionKey: q.questionKey,
+      optionKeys: shuffledOptions.map(opt => opt.key),
+      correct: newCorrectIndex,
     };
   });
 };
@@ -49,72 +52,74 @@ const Preguntas: React.FC = () => {
   const [correctAnswered, setCorrectAnswered] = useState(false);
   const [shuffledQuestions, setShuffledQuestions] = useState<ShuffledQuestion[]>([]);
 
+  const { t } = useTranslation();
+
   const trashEmojis = ['🍔', '🍕', '🥤', '🍜', '🎂', '🍓', '🥫', '🍺', '☕', '🧁'];
 
   const allQuestions: ShuffledQuestion[] = [
     {
-      question: 'How much energy does recycling aluminum save compared to making it from raw ore?',
-      options: ['25% of energy', '95% of energy', '50% of energy'],
+      questionKey: 'how_much_energy',
+      optionKeys: ['25_percent_energy', '95_percent_energy', '50_percent_energy'],
       correct: 1,
     },
     {
-      question: 'What is the main benefit of reducing waste generation?',
-      options: ['Prevents overfilled landfills and reduces pollution', 'Saves money only', 'Looks good aesthetically'],
+      questionKey: 'what_is_the',
+      optionKeys: ['prevents_overfilled', 'saves_money', 'looks_good'],
       correct: 0,
     },
     {
-      question: 'How much CO₂ can reusing glass cullet save per ton?',
-      options: ['100 kg of CO₂', 'Over 300 kg of CO₂', '50 kg of CO₂'],
+      questionKey: 'how_much_co2',
+      optionKeys: ['100kg', 'over_300', '50kg'],
       correct: 1,
     },
     {
-      question: 'How much less air pollution does recycling paper produce compared to raw pulp?',
-      options: ['35% less', '50% less', '74% less'],
+      questionKey: 'how_much_less',
+      optionKeys: ['35%_less', '50%_less', '74%_less'],
       correct: 2,
     },
     {
-      question: 'According to the Ellen MacArthur Foundation, reuse reduces greenhouse gas emissions how much more than recycling?',
-      options: ['30% more', '88% more', '50% more'],
+      questionKey: 'according_to',
+      optionKeys: ['30%_more', '88%_more', '50%_more'],
       correct: 1,
     },
     {
-      question: 'How many coal power plants could be shut down by 2030 with a zero-waste strategy?',
-      options: ['50 plants', '80 plants', '100 plants'],
+      questionKey: 'how_many_coal',
+      optionKeys: ['50_plants', '80_plants', '100_plants'],
       correct: 1,
     },
     {
-      question: 'How much wood does recycling one ton of office paper save?',
-      options: ['One ton', 'Over two tons', 'Half a ton'],
+      questionKey: 'how_much_wood',
+      optionKeys: ['1_ton', 'over_2_tons', 'half_a_ton'],
       correct: 1,
     },
     {
-      question: 'How much water pollution does recycling paper reduce compared to making it from raw pulp?',
-      options: ['20% less', '35% less', '50% less'],
+      questionKey: 'how_much_water',
+      optionKeys: ['20%_less', '35%_less', '50%_less'],
       correct: 1,
     },
     {
-      question: 'By how much can reusing glass reduce energy used for melting?',
-      options: ['Up to 15%', 'Up to 30%', 'Up to 50%'],
+      questionKey: 'by_how_much',
+      optionKeys: ['up_to_15', 'up_to_30', 'up_to_50'],
       correct: 1,
     },
     {
-      question: 'How many metric tons of CO₂-equivalent emissions did U.S. recycling and composting avoid in 2018?',
-      options: ['100 million', '193 million', '250 million'],
+      questionKey: 'how_many_metric',
+      optionKeys: ['100_million', '193_million', '250_million'],
       correct: 1,
     },
     {
-      question: 'What does reusing materials help preserve for future generations?',
-      options: ['Only energy', 'Finite natural resources', 'Just money'],
+      questionKey: 'what_does_reusing',
+      optionKeys: ['only_energy', 'finite_natural', 'just_money'],
       correct: 1,
     },
     {
-      question: 'What harmful gas is released from overfilled landfills?',
-      options: ['Oxygen', 'Methane', 'Nitrogen'],
+      questionKey: 'what_harmful_gas',
+      optionKeys: ['oxygen', 'methane', 'nitrogen'],
       correct: 1,
     },
     {
-      question: 'By what percentage could global reuse models reduce emissions in key sectors?',
-      options: ['Up to 50%', 'Up to 80%', 'Up to 30%'],
+      questionKey: 'by_what_percentage',
+      optionKeys: ['up_to_50', 'up_to_80', 'up_to_30'],
       correct: 1,
     },
   ];
@@ -207,9 +212,9 @@ const Preguntas: React.FC = () => {
           <div className="page-preguntas">
             <div className="overlay-preguntas">
               <div className="modal-preguntas">
-                <h2>Ocean is clean!</h2>
-                <p>The whales are happy thanks to your help.</p>
-                <button onClick={resetGame} className="btn-modal">Play again</button>
+                <h2>{t('ocean_is_clean')}</h2>
+                <p>{t('the_whales')}</p>
+                <button onClick={resetGame} className="btn-modal">{t('play_again')}</button>
               </div>
             </div>
           </div>
@@ -225,9 +230,9 @@ const Preguntas: React.FC = () => {
           <div className="page-preguntas">
             <div className="overlay-preguntas">
               <div className="modal-preguntas">
-                <h2>Game Over</h2>
-                <p>You lost all lives. Try again to save the whale.</p>
-                <button onClick={resetGame} className="btn-modal">Try again</button>
+                <h2>{t('game_over')}</h2>
+                <p>{t('you_lost')}</p>
+                <button onClick={resetGame} className="btn-modal">{t('try_again')}</button>
               </div>
             </div>
           </div>
@@ -245,32 +250,40 @@ const Preguntas: React.FC = () => {
       <IonContent className="preguntas-container" style={{ '--background': '#f0f0e8' } as any}>
         <div className="page-preguntas">
           <header>
-            <h1>Clean the Ocean</h1>
+            <h1>{t('clean')}</h1>
+            <div className="instructions-preguntas">
+              <p>{t('clean_instructions')}</p>
+            </div>
             <div className="hud-preguntas">
-              <div className="lives-preguntas">Lives: <span id="lives">{'❤️'.repeat(lives)}</span></div>
-              <div className="progress-preguntas">Trash removed: <span id="progress">{progress}</span>/{shuffledQuestions.length}</div>
-              <button id="restart" onClick={resetGame} className="btn-restart-preguntas">Restart</button>
+              <div className="lives-preguntas">
+                {t('lives')}: <span id="lives">{'❤️'.repeat(lives)}</span>
+              </div>
+              <div className="progress-preguntas">
+                {t('trash_removed')} <span id="progress">{progress}</span>/{shuffledQuestions.length}
+              </div>
+              <button id="restart" onClick={resetGame} className="btn-restart-preguntas">
+                {t('reset')}
+              </button>
             </div>
           </header>
 
           <main>
             <div id="ocean" className="ocean-preguntas">
               {Array.from({ length: visibleLayers }).map((_, layerIndex) => (
-                <div
-                  key={layerIndex}
-                  className={`trash-layer-preguntas layer-${layerIndex}`}
-                >
+                <div key={layerIndex} className={`trash-layer-preguntas layer-${layerIndex}`}>
                   {generateTrashLayer(layerIndex)}
                 </div>
               ))}
             </div>
 
             <section className="question-panel-preguntas">
-              <div id="question" className="question-preguntas">{shuffledQuestions[currentQuestion].question}</div>
+              <div id="question" className="question-preguntas">
+                {t(shuffledQuestions[currentQuestion].questionKey)}
+              </div>
               <div id="options" className="options-preguntas">
-                {shuffledQuestions[currentQuestion].options.map((option, index) => {
+                {shuffledQuestions[currentQuestion].optionKeys.map((key, index) => {
                   let buttonClass = 'opt-preguntas';
-                  
+
                   if (answered && selectedAnswer === index && index !== shuffledQuestions[currentQuestion].correct) {
                     buttonClass += ' wrong';
                   }
@@ -286,17 +299,13 @@ const Preguntas: React.FC = () => {
                       onClick={() => handleAnswer(index)}
                       disabled={answered && !correctAnswered}
                     >
-                      {option}
+                      {t(key)}
                     </button>
                   );
                 })}
               </div>
             </section>
           </main>
-
-          <div className="instructions-preguntas">
-            <p>Answer correctly to remove trash and clean the ocean.</p>
-          </div>
         </div>
       </IonContent>
     </IonPage>

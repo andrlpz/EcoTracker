@@ -89,7 +89,7 @@ const Elemento3: React.FC = () => (
         <IonHeader>
             <IonToolbar color="light">
                 <IonButtons slot="start">
-                    <IonBackButton className='back-button' defaultHref="/informacion" />
+                    <IonBackButton className='back-button' defaultHref="/tabs/informacion" />
                 </IonButtons>
             </IonToolbar>
         </IonHeader>

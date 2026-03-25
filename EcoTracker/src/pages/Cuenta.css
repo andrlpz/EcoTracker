@@ -4,7 +4,154 @@
   font-family: 'Montserrat', sans-serif;
   font-size: 2em;
   font-weight: bold;
-  margin-top: 5vh ;
+  margin-top: 5vh;
+}
+
+/* ── Profile header ─────────────────────────────────────── */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  padding: 0 5vw;
+  gap: 12px;
+  margin-top: 2vh;
+}
+
+/* Fila: avatar + nombre + botón salir */
+.profile-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.profile-user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-image {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.profile-name {
+  color: #0A3A4F;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1em;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.profile-rank {
+  color: #002501;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82em;
+  font-weight: bold;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout-button {
+  color: white;
+  --background: #003f5c;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  flex-shrink: 0;
+  font-size: 0.8em;
+}
+
+/* ── Language selector ──────────────────────────────────── */
+.language-selector-container {
+  padding: 10px 0 4px;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.language-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #555;
+  margin: 0 0 6px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.language-buttons-container {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.language-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  background-color: #374151;
+  color: #d1d5db;
+  border: none;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.language-button:hover {
+  background-color: #4b5563;
+}
+
+.language-button.active {
+  background-color: #0891b2;
+  color: white;
+}
+
+.language-button.active:hover {
+  background-color: #0e7490;
+}
+
+.language-flag {
+  font-size: 1rem;
+}
+
+.language-name {
+  font-weight: 500;
+}
+
+.language-indicator {
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+/* ── Favourite places ───────────────────────────────────── */
+.fav-places {
+  color: #0A3A4F;
+  margin-left: 5vw;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3vh;
+  font-weight: bold;
+  margin-top: 2vh;
 }
 
 .slide-box {
@@ -21,61 +168,6 @@
   margin: 10px;
   position: relative;
   cursor: pointer;
-}
-
-.profile-header {
-  display: flex;
-  align-items: center;
-  padding-left: 5vw;
-  padding-right: 5vw;
-  justify-content: space-between;
-  gap: 5vw;
-}
-
-.profile-user{
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 20px;
-}
-
-.profile-image {
-  width: 35vw;
-  max-width: 150px;
-  height: auto;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-bottom: 2vh;
-}
-
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-}
-
-.profile-name {
-  color: #0A3A4F;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.4em;
-  font-weight: bold;
-}
-
-.profile-rank {
-  color: #002501;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 1.1em;
-  font-weight: bold;
-  margin-top: 1vh;
-}
-
-.fav-places {
-  color: #0A3A4F;
-  margin-left: 5vw;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 3vh;
-  font-weight: bold;
-  margin-top: 0;
 }
 
 .img-fav-places {
@@ -99,9 +191,11 @@
   font-size: 1em;
 }
 
+/* ── Modal ──────────────────────────────────────────────── */
 .modal-overlay {
   position: fixed;
   top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
@@ -116,28 +210,61 @@
   background: white;
   padding: 5vw;
   border-radius: 8px;
-
   width: 90vw;
   max-width: 400px;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
+  max-height: 85vh;
+  overflow-y: auto;
 }
 
+.modal-content-text {
+  color: black;
+}
+
+/* ── Desktop overrides ──────────────────────────────────── */
 @media (min-width: 768px) {
   .profile-header {
     flex-direction: row;
     align-items: center;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 0 5vw;
+  }
+
+  .profile-top-row {
+    flex: 1;
+    min-width: 260px;
+  }
+
+  .language-selector-container {
+    border-top: none;
+    padding: 0;
+    min-width: 220px;
+  }
+
+  .language-buttons-container {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .language-button {
+    justify-content: flex-start;
+    font-size: 0.9rem;
+    padding: 8px 12px;
   }
 
   .profile-image {
-    margin-bottom: 0;
-    margin-right: 2vw;
+    width: 64px;
+    height: 64px;
   }
 
-  .profile-info {
-    align-items: flex-start;
-    text-align: left;
+  .profile-name {
+    font-size: 1.2em;
+  }
+
+  .profile-rank {
+    font-size: 0.95em;
   }
 
   .slide-box {
@@ -145,138 +272,4 @@
     height: 300px;
     font-size: 1.5rem;
   }
-}
-
-.modal-content-text{
-  color: black;
-}
-
-.logout-button{
-  color: white;
-  --background: #003f5c;
-}
-
-.language-selector-container {
-  display: flex;
-  overflow-y: auto;
-}
-
-@media (min-width: 640px) {
-  .language-selector-container {
-    padding: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
-}
-
-.language-selector-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.language-selector-container::-webkit-scrollbar-track {
-  background: #374151;
-}
-
-.language-selector-container::-webkit-scrollbar-thumb {
-  background: #6b7280;
-  border-radius: 3px;
-}
-
-.language-selector-container::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
-}
-
-.language-selector-wrapper {
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 640px) {
-  .language-selector-wrapper {
-    margin-bottom: 1.5rem;
-  }
-}
-
-.language-label {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: black;
-  margin-bottom: 0.5rem;
-}
-
-@media (min-width: 640px) {
-  .language-label {
-    font-size: 0.875rem;
-    margin-bottom: 0.75rem;
-  }
-}
-
-.language-buttons-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-}
-
-@media (min-width: 640px) {
-  .language-buttons-container {
-    gap: 0.5rem;
-  }
-}
-
-.language-button {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  transition: background-color 0.2s, color 0.2s;
-  font-size: 0.875rem;
-  background-color: #374151;
-  color: #d1d5db;
-  border: none;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-}
-
-@media (min-width: 640px) {
-  .language-button {
-    gap: 0.75rem;
-    padding: 0.75rem;
-    font-size: 1rem;
-  }
-}
-
-.language-button:hover {
-  background-color: #4b5563;
-}
-
-.language-button.active {
-  background-color: #0891b2;
-  color: white;
-}
-
-.language-button.active:hover {
-  background-color: #0e7490;
-}
-
-.language-flag {
-  font-size: 1.125rem;
-}
-
-@media (min-width: 640px) {
-  .language-flag {
-    font-size: 1.25rem;
-  }
-}
-
-.language-name {
-  font-weight: 500;
-}
-
-.language-indicator {
-  margin-left: auto;
-  width: 0.5rem;
-  height: 0.5rem;
-  background-color: white;
-  border-radius: 50%;
 }

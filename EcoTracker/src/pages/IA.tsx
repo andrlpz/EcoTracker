@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { IonPage, IonContent, IonHeader } from '@ionic/react';
 import OpenAI from "openai";
 import './IA.css';
+import { useTranslation } from 'react-i18next';
 
 function IA() {
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ function IA() {
           {
             role: "user",
             content: [
-              { type: "text", text: "Dime en qué categoría de residuo entra el material de la imagen (papel y cartón, vidrio, envases de plástico y metal, residuos generales no reciclables, residuos orgánicos o composta, residuos peligrosos o electrónicos ). También dame una lista de 4 ideas para reusar el objeto como manualidades. Responde unicamente en un json con clasificacion ejemplo: {tipo: ´residuos peligrosos y electronicos} ideas: [ideas y pasos]´" },
+              { type: "text", text: t('system_prompt') },
               {
                 type: "image_url",
                 image_url: {
@@ -73,21 +74,23 @@ function IA() {
     input.click();
   };
 
+  const { t } = useTranslation();
+
   return (
     <IonPage>
       <IonContent className='fondo'>
       <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"></link>
         <div className='fondo'> 
         <div className='contenedor'>
-        <h1 className='tituloIA'>Descubre qué tipo de clasificación es el objeto e ideas para reusarlo </h1>
+        <h1 className='tituloIA'>{t('find_out')} </h1>
         <button onClick={seleccionarImagen} disabled={loading} className='btnIA'>
-          {loading ? 'Analizando...' : 'Subir y Describir Imagen'}
+          {loading ? 'Analizando...' : t('upload')}
         </button>
         <img src={imagen} className='fotoIA' />
         <div className='respuestaIA'>
-          <p className='tipoIA'>tipo: {respuesta.tipo}</p>
+          <p className='tipoIA'>{t('type')}: {respuesta.tipo}</p>
           <div className='ideasIA'>
-          <p>ideas: </p>
+          <p>{t('ideas')} </p>
           <ul>
             {respuesta.ideas && respuesta.ideas.map((idea, index) => (
               <li key={index} style={{ marginBottom: '10px' }}>
